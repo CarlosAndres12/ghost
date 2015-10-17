@@ -110,6 +110,19 @@ class db
 					break;
 			}
 			break;
+
+			case "repositorio":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$nombre_viejo=mysqli_real_escape_string($this->cn,$object->auxiliars['nombre_viejo']);
+
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$descripcion=mysqli_real_escape_string($this->cn,$object->get('descripcion'));
+					$this->do_operation("UPDATE repositorio SET  nombre = '$nombre' , descripcion = '$descripcion' WHERE nombre = '$nombre_viejo';");
+					break;
+			}
+			break;
 			
 			default: break;
 		}

@@ -2,7 +2,7 @@
 
 require('configs/include.php');
 
-class c_registrar_repositorio extends ghost_admin_controller {
+class c_buscar_repositorio extends ghost_admin_controller {
 	
 	public function buscar_repositorio(){
 		if($this->post->nombre == null){
@@ -52,7 +52,7 @@ class c_registrar_repositorio extends ghost_admin_controller {
 	}
 }
 
-$call = new c_registrar_repositorio();
+$call = new c_buscar_repositorio();
 $call->run();
 
 ?>
