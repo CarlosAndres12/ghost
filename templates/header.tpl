@@ -16,7 +16,7 @@
 <body>
 <nav class="blue darken-4">
 <div class="nav-wrapper">
-  <a href="#" class="brand-logo">Ghost</a>
+  <a href="{$gvar.l_global}" class="brand-logo">Ghost</a>
   <ul id="nav-mobile" class="right hide-on-med-and-down">
     {if isset($smarty.session.nombre_usuario) && $smarty.get.option neq 'logout'}
       <li><a href="{$gvar.l_global}login.php?option=logout">{$gvar.n_logout}</a></li>

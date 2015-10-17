@@ -80,12 +80,15 @@ class db
 	public function insert($options,$object) 
 	{
 		switch($options['lvl1'])
-		{																																																																																													
-			case "user":
+		{		
+			//REPOSITORIO																																																																																											
+			case "repositorio":
 			switch($options['lvl2'])
 			{
 				case "normal":
-					//
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$descripcion=mysqli_real_escape_string($this->cn,$object->get('descripcion'));
+					$this->do_operation("INSERT INTO repositorio VALUES('$nombre','$descripcion');");
 					break;
 			}
 			break;
@@ -153,6 +156,22 @@ class db
 					break;
 			}
 			break;
+
+			//REPOSITORIO																																																																																																						
+			case "repositorio":
+			switch($option['lvl2'])
+			{
+				case "one": 
+					$nombre =  mysqli_real_escape_string($this->cn, $data['nombre']);
+					$info = $this->get_data("SELECT * FROM repositorio WHERE nombre = '$nombre';");
+					break;
+				case "search": 
+					$nombre =  mysqli_real_escape_string($this->cn, $data['nombre']);
+					$info = $this->get_data("SELECT * FROM repositorio WHERE nombre LIKE '%$nombre%';");
+					break;
+			}
+			break;
+
 
 			default: break;
 		}

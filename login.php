@@ -35,6 +35,7 @@ class c_login extends super_controller {
 			}else{
 				session_start();
 				$_SESSION["nombre_usuario"] = $usuarios[0]->get('nombre_usuario');
+				$_SESSION["es_administrador"] = ($usuarios[0]->get('tipo') == 'administrador');
 				//$url = $gvar['l_index'];
 				$url = '/ghost';
 				header("Location: $url ");
@@ -69,6 +70,12 @@ class c_login extends super_controller {
 		}else{
 			if(isset($this->post->option)){			
 				$this->{$this->post->option}();
+			}
+			if(isset($this->get->error)){			
+				if($this->get->error=='usuario')
+				{
+					$this->engine->assign('error_msg','Debes haber iniciado sesión antes de acceder a cualquier funcionalidad.');
+				}
 			}
 			$this->display();
 		}

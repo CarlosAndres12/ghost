@@ -7,6 +7,7 @@ class usuario extends object_standard
 	protected $nombre;
 	protected $correo_electronico;
 	protected $contrasena;	
+	protected $tipo;	
 
 	//components
 	var $components = array();
@@ -17,7 +18,7 @@ class usuario extends object_standard
 	//data about the attributes
 	public function metadata()
 	{
-		return array("nombre_usuario" => array(), "nombre" => array(), "correo_electronico" => array(), "contrasena" => array()); 
+		return array("nombre_usuario" => array(), "nombre" => array(), "correo_electronico" => array(), "contrasena" => array(), "tipo" => array()); 
 	}
 
 	public function primary_key()
