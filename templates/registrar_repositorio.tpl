@@ -18,7 +18,7 @@
     </div>
     <div class="row">
 			<button type="submit" class="btn">
-				Registrar repositorio
+				Registrar
 				<i class="material-icons right">send</i>
 			</button>
     </div>
