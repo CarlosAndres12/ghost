@@ -2,7 +2,7 @@
 	<h3>Buscar repositorio</h3>
 </div>
 <div class="row">
-  <form url="{$gvar.l_global}buscar_repositorio.php" method="post" class="col s12">
+  <form url="{$gvar.l_global}buscar_repositorio.php" method="get" class="col s12">
     <div class="row valign-wrapper">
       <div class="input-field col ">
         <input id="nombre" name="nombre" type="text" class="validate" required value="{$nombre}">

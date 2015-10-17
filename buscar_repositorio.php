@@ -5,12 +5,12 @@ require('configs/include.php');
 class c_buscar_repositorio extends ghost_admin_controller {
 	
 	public function buscar_repositorio(){
-		if($this->post->nombre == null){
+		if($this->get->nombre == null){
 			$this->engine->assign('error_msg',"Para buscar un repositorio primero debe ingresar su nombre.");
 			return;
 		}
 		
-		$nombre = $this->post->nombre;
+		$nombre = $this->get->nombre;
 
 		$this->engine->assign('nombre',$nombre);
 
@@ -45,8 +45,8 @@ class c_buscar_repositorio extends ghost_admin_controller {
 	public function run()
 	{
 		parent::run();
-		if(isset($this->post->option)){			
-			$this->{$this->post->option}();
+		if(isset($this->get->option)){			
+			$this->{$this->get->option}();
 		}
 		$this->display();	
 	}

@@ -4,8 +4,12 @@ require('configs/include.php');
 
 class c_login extends super_controller {
 	
+	private function datos_completos(){
+		return !($this->post->nombre_usuario == null || $this->post->contrasena == null);
+	}
+
 	public function login(){
-		if($this->post->nombre_usuario == null || $this->post->contrasena == null){
+		if(!$this->datos_completos()){
 			$this->engine->assign('error_msg','Aún hay campos vacíos.');
 			return;
 		}

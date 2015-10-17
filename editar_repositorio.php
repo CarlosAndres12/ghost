@@ -4,11 +4,12 @@ require('configs/include.php');
 
 class c_editar_repositorio extends ghost_admin_controller {
 	
+	private function descripcion_o_nombre_vacios(){
+		return ($this->post->descripcion == null || $this->post->nombre == null);
+	}
+
 	public function actualizar_repositorio(){
-		if($this->post->nombre == null){
-			$this->engine->assign('error_msg',"Nombre de Repositorio ya existe.");
-			return;
-		}
+		
 
 		$nombre = $this->post->nombre;
 		$nombre_viejo = $this->post->nombre_viejo;
@@ -16,6 +17,11 @@ class c_editar_repositorio extends ghost_admin_controller {
 		$this->engine->assign('nombre',$nombre);
 		$this->engine->assign('descripcion',$descripcion);
 		$this->engine->assign('nombre_viejo',$nombre_viejo);
+
+		if($this->descripcion_o_nombre_vacios()){
+			$this->engine->assign('error_msg',"La descripción y el nombre  del repositorio no pueden estar  vacíos.");
+			return;
+		}
 
 		if($nombre != $nombre_viejo){
 			$cod['repositorio']['nombre'] = $nombre;
@@ -33,11 +39,6 @@ class c_editar_repositorio extends ghost_admin_controller {
 			}
 		}
 		
-		if($descripcion == null){
-			$this->engine->assign('error_msg',"Por favor ingrese una breve descripción para el repositorio.");
-			return;
-		}
-
 		$repositorio = new repositorio($this->post);
 		$repositorio->auxiliars['nombre_viejo'] = $nombre_viejo;
 		$this->orm->connect();
@@ -45,7 +46,7 @@ class c_editar_repositorio extends ghost_admin_controller {
 		$this->orm->close();
 		rename("files/$nombre_viejo","files/$nombre");
 		$index = $gvar['l_global'];
-		header("Location: $index index.php?success_msg=Repositorio actualizado exitosamente.");
+		header("Location: $index buscar_repositorio.php?success_msg=Repositorio actualizado exitosamente.");
 		
 	}
 

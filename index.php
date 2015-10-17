@@ -23,9 +23,6 @@ class c_index extends ghost_controller {
 				$this->engine->assign('error_msg','Esta funcionalidad solo está disponible para administradores.');
 			}
 		}
-		if(isset($this->get->success_msg)){			
-			$this->engine->assign('success_msg',$this->get->success_msg);
-		}
 		$this->display();
 	}
 }

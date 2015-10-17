@@ -4,17 +4,22 @@ require('configs/include.php');
 
 class c_registrar_repositorio extends ghost_admin_controller {
 	
+	private function descripcion_o_nombre_vacios(){
+		return ($this->post->descripcion == null || $this->post->nombre == null);
+	}
+
 	public function registrar_repositorio(){
-		if($this->post->nombre == null){
-			$this->engine->assign('error_msg',"Ya existe un repositorio con el nombre '', por favor seleccione otro.");
-			return;
-		}
+		
 		
 		$nombre = $this->post->nombre;
 		$descripcion = $this->post->descripcion;
 		$this->engine->assign('nombre',$nombre);
 		$this->engine->assign('descripcion',$descripcion);
 
+		if($this->descripcion_o_nombre_vacios()){
+			$this->engine->assign('error_msg',"La descripción y el nombre  del repositorio no pueden estar  vacíos.");
+			return;
+		}
 
 		$cod['repositorio']['nombre'] = $nombre;
 		//$cod['repositorio']['descripcion'] = $this->post->descripcion;
@@ -27,18 +32,13 @@ class c_registrar_repositorio extends ghost_admin_controller {
 		$this->orm->close();
 
 		if($repositorios==null){
-			if($this->post->descripcion == null){
-				$this->engine->assign('error_msg',"La descripción del repositorio está vacía, por favor agregue una breve descripción del repositorio.");
-				return;
-			}else{
-				$repositorio = new repositorio($this->post);
-				$this->orm->connect();
-				$this->orm->insert_data('normal',$repositorio);
-				$this->orm->close();
-				mkdir("files/$nombre");
-				$index = $gvar['l_global'];
-				header("Location: $index index.php?success_msg=Repositorio registrado exitosamente.");
-			}
+			$repositorio = new repositorio($this->post);
+			$this->orm->connect();
+			$this->orm->insert_data('normal',$repositorio);
+			$this->orm->close();
+			mkdir("files/$nombre");
+			$index = $gvar['l_global'];
+			header("Location: $index index.php?success_msg=Repositorio registrado exitosamente.");
 		}else{
 			$this->engine->assign('error_msg',"Ya existe un repositorio con el nombre '$nombre', por favor seleccione otro.");
 		}
