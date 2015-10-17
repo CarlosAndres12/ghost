@@ -1,3 +1,4 @@
 templates_c
+files
 .*
 configs/include.php
