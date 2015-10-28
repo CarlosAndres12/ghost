@@ -141,6 +141,16 @@ class db
 					break;
 			}
 			break;
+
+			case "repositorio":
+			switch($options['lvl2'])
+			{
+				case "normal": 
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$this->do_operation("DELETE FROM repositorio WHERE nombre = '$nombre';");
+					break;
+			}
+			break;
 			
 			default: break;			  
 		}
@@ -181,6 +191,17 @@ class db
 				case "search": 
 					$nombre =  mysqli_real_escape_string($this->cn, $data['nombre']);
 					$info = $this->get_data("SELECT * FROM repositorio WHERE nombre LIKE '%$nombre%';");
+					break;
+			}
+			break;
+
+			//PAQUETE																																																																																																						
+			case "paquete":
+			switch($option['lvl2'])
+			{
+				case "by_repositorio": 
+					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
+					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio';");
 					break;
 			}
 			break;
