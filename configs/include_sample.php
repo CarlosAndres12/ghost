@@ -28,6 +28,7 @@ define('C_DB_LIMIT', 10); //DB limit of elements by page
 
 require(C_FULL_PATH."modules/super_controller.php"); //Super Controller
 require(C_FULL_PATH."modules/ghost_controller.php"); //ghost Controller
+require(C_FULL_PATH."modules/ghost_admin_controller.php"); //ghost admin Controller
 require(C_FULL_PATH."modules/object_standard.php"); //Object Standard
 require(C_FULL_PATH."modules/orm.php"); //Object Relational Mapping
 require(C_FULL_PATH."modules/db.php"); //database manager
