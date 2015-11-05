@@ -11,7 +11,9 @@ class paquete extends object_standard
 	protected $tamano_instalado;	
 	protected $fecha_subida;	
 	protected $fecha_ultima_actualizada;	
-	protected $repositorio;	
+	protected $repositorio;
+
+	private static $architectures = ["x86_32","x86_64","ARM6"];
 
 	//components
 	var $components = array();
@@ -48,6 +50,16 @@ class paquete extends object_standard
 				break;
 		}
 	}
+
+	/**
+	 * @return array
+	 */
+	public static function getArchitectures()
+	{
+		return self::$architectures;
+	}
+
+
 }
 
 ?>

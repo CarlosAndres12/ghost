@@ -92,6 +92,30 @@ class db
 					break;
 			}
 			break;
+
+			case 'paquete':
+				switch($options['lvl2']) {
+					case "normal":
+						$nombre = mysqli_real_escape_string($this->cn,$object->get('nombre'));
+						$arch = mysqli_real_escape_string($this->cn, $object->get('arquitectura'));
+						$version = mysqli_real_escape_string($this->cn, $object->get('version'));
+						$descripcion = mysqli_real_escape_string($this->cn, $object->get('descripcion'));
+						$fecha_subida = mysqli_real_escape_string($this->cn, $object->get('fecha_subida'));
+						$fecha_actulizacion = mysqli_real_escape_string($this->cn,$object->get('fecha_ultima_actualizada'));
+						$comprimido = mysqli_real_escape_string($this->cn,$object->get('tamano_comprimido'));
+						$instalado = mysqli_real_escape_string($this->cn, $object->get('tamano_instalado'));
+						$repositorio = mysqli_real_escape_string($this->cn	, $object->get('repositorio'));
+
+
+						$query = "INSERT INTO paquete VALUE ('$nombre', '$arch', $version, '$descripcion', $comprimido, $instalado, '$fecha_subida', '$fecha_actulizacion', '$repositorio');";
+
+						//echo "consulta". $query ."\n\n";
+
+						$this->do_operation($query);
+
+						break;
+				}
+			break;
 			
 			default: break;
 		}
@@ -187,6 +211,9 @@ class db
 				case "one": 
 					$nombre =  mysqli_real_escape_string($this->cn, $data['nombre']);
 					$info = $this->get_data("SELECT * FROM repositorio WHERE nombre = '$nombre';");
+					break;
+				case "all":
+					$info = $this->get_data("SELECT * FROM repositorio");
 					break;
 				case "search": 
 					$nombre =  mysqli_real_escape_string($this->cn, $data['nombre']);

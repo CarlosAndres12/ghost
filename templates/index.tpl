@@ -2,7 +2,7 @@
 	<h2>Menú principal</h2>
 	<div class="row">
 		<div class="col s12 m6 center-align">
-		  <a class="waves-effect waves-light btn" href="#">
+		  <a class="waves-effect waves-light btn" href="{$gvar.l_global}registrar_paquete.php">
 		  	<i class="material-icons right">add</i>
 		  	Registrar paquete
 	  	</a>
