@@ -170,7 +170,7 @@ class db
 					$nombre_usuario =  mysqli_real_escape_string($this->cn, $data['nombre_usuario']);
 					$contrasena =  mysqli_real_escape_string($this->cn, $data['contrasena']);
 					$info = $this->get_data("SELECT * FROM usuario WHERE nombre_usuario='$nombre_usuario' AND 
-																	contrasena = AES_ENCRYPT('$contrasena','ghost');");
+																	contrasena = SHA2('$contrasena',256);");
 					break;
 
 				case "one": 
