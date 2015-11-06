@@ -37,6 +37,7 @@ class c_registrar_repositorio extends ghost_admin_controller {
 			$this->orm->insert_data('normal',$repositorio);
 			$this->orm->close();
 			mkdir("files/$nombre");
+			touch("files/$nombre/index.html");
 			$index = $gvar['l_global'];
 			header("Location: $index index.php?success_msg=Repositorio registrado exitosamente.");
 		}else{
