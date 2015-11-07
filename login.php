@@ -54,6 +54,7 @@ class c_login extends super_controller {
 	public function display()
 	{
 		$this->engine->assign('title',$this->gvar['n_index']);
+		
 		$this->engine->display('header.tpl');
 		$this->engine->display('login.tpl');
 		$this->engine->display('footer.tpl');
