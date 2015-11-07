@@ -92,7 +92,7 @@ class db
 					break;
 			}
 			break;
-<<<<<<< HEAD
+
 
 			case 'paquete':
 				switch($options['lvl2']) {
