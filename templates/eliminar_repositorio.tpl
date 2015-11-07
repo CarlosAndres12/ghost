@@ -39,7 +39,7 @@
 		</div>
 	{/if}
 
-	<form url="{$gvar.l_global}Editar_repositorio.php" method="post" class="col s12 m10 offset-m1 center-align">
+	<form url="{$gvar.l_global}Eliminar_repositorio.php" method="post" class="col s12 m10 offset-m1 center-align">
 		<input name="option" type="hidden" value="eliminar_repositorio">	
 		<input name="nombre" type="hidden" value="{$repositorio->get('nombre')}">
 		<div class="row">

@@ -22,6 +22,7 @@
       <li><a href="{$gvar.l_global}login.php?option=logout">{$gvar.n_logout}</a></li>
     {else}
       <li><a href="{$gvar.l_global}login.php">{$gvar.n_login}</a></li>
+      <li><a href="{$gvar.l_global}registrar_usuario.php">Registrarme</a></li>
     {/if}
   </ul>
 </div>
