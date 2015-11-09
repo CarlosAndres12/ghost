@@ -8,6 +8,7 @@
  */
 
 require('configs/include.php');
+require_once('utils.php');
 
 class c_registrar_paquete extends ghost_controller
 {
@@ -26,7 +27,7 @@ class c_registrar_paquete extends ghost_controller
         }
 
         $data->fecha_subida = date('Y/m/d H:i:s');
-        $data->fecha_ultima_actualizada = date('Y/m/d H:i:s');
+        $data->fecha_ultima_actualizada = $data->fecha_subida;
 
         // TODO calcular correctamente
         $data->tamano_comprimido = 1;
@@ -48,25 +49,11 @@ class c_registrar_paquete extends ghost_controller
 
     }
 
-    private function get_repositorios() {
-
-        $options["repositorio"]["lvl2"] = "all";
-
-        $this->orm->connect();
-        $this->orm->read_data(array('repositorio'),$options);
-
-        $repositorios = $this->orm->get_objects("repositorio");
-
-        $this->orm->close();
-
-        return $repositorios;
-
-    }
 
     public function display()
     {
         $this->engine->assign('title',$this->gvar['n_index']);
-        $this->engine->assign('repositorios',$this->get_repositorios());
+        $this->engine->assign('repositorios',c_utils::get_repositorios($this->orm));
         $this->engine->assign('archs',paquete::getArchitectures());
 
         $this->engine->display('header.tpl');

@@ -8,7 +8,7 @@
 	  	</a>
 		</div>
 		<div class="col s12 m6 center-align">
-			<a class="waves-effect waves-light btn" href="#">
+			<a class="waves-effect waves-light btn" href="{$gvar.l_global}buscar_paquete.php">
 		  	<i class="material-icons right">search</i>
 		  	Buscar paquete
 	  	</a>
