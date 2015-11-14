@@ -36,6 +36,7 @@ class c_registrar_repositorio extends ghost_admin_controller {
 			$this->orm->connect();
 			$this->orm->insert_data('normal',$repositorio);
 			$this->orm->close();
+
 			mkdir("files/$nombre");
 			touch("files/$nombre/index.html");
 			$index = $gvar['l_global'];
@@ -53,6 +54,8 @@ class c_registrar_repositorio extends ghost_admin_controller {
 		$this->engine->display('registrar_repositorio.tpl');
 		$this->engine->display('footer.tpl');
 		$this->engine->display('message.tpl');
+
+
 	}
 	
 	public function run()

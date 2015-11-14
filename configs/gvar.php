@@ -18,7 +18,7 @@ $gvar=array();
 //messages
 
 //links and names
-$gvar['l_global'] = "http://localhost:63342/ghost/";
+$gvar['l_global'] = "http://localhost/ghost/";
 $gvar['n_global'] = "ghost";
 
 $gvar['n_login'] = "Login";

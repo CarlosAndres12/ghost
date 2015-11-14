@@ -28,9 +28,12 @@ class c_registrar_paquete extends ghost_controller
             return;
         }
 
-        $upload_dir = ghost_config::get_package_path($data->repositorio,$data->name);
+        $upload_dir = ghost_config::get_package_path($data->repositorio,$data->nombre);
 
-        echo $upload_dir;
+        echo "el directorio es : ". $upload_dir;
+
+        echo "error : ".$_FILES['file']['error'];
+        sleep(10);
 
         if(!move_uploaded_file($_FILES['file']['tmp_name'], $upload_dir)) {
 
@@ -38,6 +41,8 @@ class c_registrar_paquete extends ghost_controller
             return;
 
         }
+
+
 
         $data->fecha_subida = date('Y/m/d H:i:s');
         $data->fecha_ultima_actualizada = $data->fecha_subida;
@@ -85,3 +90,5 @@ class c_registrar_paquete extends ghost_controller
 
 $call = new c_registrar_paquete();
 $call->run();
+
+header ("Connection: close");

@@ -2,7 +2,7 @@
     <div class="center-align">
         <h3>Registrar paquete</h3>
     </div>
-    <form url="{$gvar.l_global}registrar_paquete.php" method="post" class="col s12 m10 offset-m1 center-align">
+    <form url="{$gvar.l_global}registrar_paquete.php" method="post" class="col s12 m10 offset-m1 center-align" enctype="multipart/form-data">
         <input name="option" type="hidden" value="registrar_paquete">
         <div class="row">
             <div class="input-field col s12">

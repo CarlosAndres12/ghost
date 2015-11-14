@@ -5,10 +5,10 @@
 /**
  * Project:     Framework G - G Light
  * File:        include.php
- * 
+ *
  * For questions, help, comments, discussion, etc., please join to the
  * website www.frameworkg.com
- * 
+ *
  * @link http://www.frameworkg.com/
  * @copyright 2013-02-07
  * @author Group Framework G  <info at frameworkg dot com>
@@ -26,12 +26,13 @@ define('C_DB_PASS', ''); //DB password
 define('C_DB_DATABASE_NAME', 'ghost'); //DB database name
 define('C_DB_LIMIT', 10); //DB limit of elements by page
 
-require(C_FULL_PATH."modules/super_controller.php"); //Super Controller
-require(C_FULL_PATH."modules/ghost_controller.php"); //ghost Controller
-require(C_FULL_PATH."modules/ghost_admin_controller.php"); //ghost admin Controller
-require(C_FULL_PATH."modules/object_standard.php"); //Object Standard
-require(C_FULL_PATH."modules/orm.php"); //Object Relational Mapping
-require(C_FULL_PATH."modules/db.php"); //database manager
-require(C_FULL_PATH."configs/functions.php"); //functions of general use
+require_once(C_FULL_PATH."modules/super_controller.php"); //Super Controller
+require_once(C_FULL_PATH."modules/ghost_controller.php"); //ghost Controller
+require_once(C_FULL_PATH."modules/ghost_admin_controller.php"); //ghost admin Controller
+require_once(C_FULL_PATH."modules/object_standard.php"); //Object Standard
+require_once(C_FULL_PATH."modules/ghost_object.php"); //Object Standard
+require_once(C_FULL_PATH."modules/orm.php"); //Object Relational Mapping
+require_once(C_FULL_PATH."modules/db.php"); //database manager
+require_once(C_FULL_PATH."configs/functions.php"); //functions of general use
 
 ?>
