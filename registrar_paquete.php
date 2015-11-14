@@ -9,6 +9,7 @@
 
 require('configs/include.php');
 require_once('utils.php');
+require_once('ghost_config.php');
 //include_once('active_record/ghost_object.php');
 
 class c_registrar_paquete extends ghost_controller
@@ -27,11 +28,22 @@ class c_registrar_paquete extends ghost_controller
             return;
         }
 
+        $upload_dir = ghost_config::get_package_path($data->repositorio,$data->name);
+
+        echo $upload_dir;
+
+        if(!move_uploaded_file($_FILES['file']['tmp_name'], $upload_dir)) {
+
+            $this->engine->assign('error_msg',"no fue posible subir el archivo");
+            return;
+
+        }
+
         $data->fecha_subida = date('Y/m/d H:i:s');
         $data->fecha_ultima_actualizada = $data->fecha_subida;
 
         // TODO calcular correctamente
-        $data->tamano_comprimido = 1;
+        $data->tamano_comprimido = $_FILES["file"]["size"];
         $data->tamano_instalado = 1;
 
         $paquete = new paquete($data);
