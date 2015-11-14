@@ -9,6 +9,7 @@
 
 require('configs/include.php');
 require_once('utils.php');
+//include_once('active_record/ghost_object.php');
 
 class c_registrar_paquete extends ghost_controller
 {
@@ -35,11 +36,7 @@ class c_registrar_paquete extends ghost_controller
 
         $paquete = new paquete($data);
 
-        $this->orm->connect();
-
-        $this->orm->insert_data('normal',$paquete);
-
-        $this->orm->close();
+        paquete::insert_object($paquete);
 
         // TODO capturar exepciones
         $index = $gvar['l_global'];
@@ -53,7 +50,7 @@ class c_registrar_paquete extends ghost_controller
     public function display()
     {
         $this->engine->assign('title',$this->gvar['n_index']);
-        $this->engine->assign('repositorios',c_utils::get_repositorios($this->orm));
+        $this->engine->assign('repositorios', repositorio::get_all());
         $this->engine->assign('archs',paquete::getArchitectures());
 
         $this->engine->display('header.tpl');

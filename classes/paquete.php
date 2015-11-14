@@ -1,6 +1,8 @@
 <?php
+
+
  
-class paquete extends object_standard
+class paquete extends ghost_object
 {
 	//attributes
 	protected $nombre;

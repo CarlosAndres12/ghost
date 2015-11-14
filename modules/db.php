@@ -37,12 +37,15 @@ class db
 	//function for doing multiple queries
 	public function do_operation($operation, $class = NULL)
 	{
+
+		echo $operation;
+
 		$result = mysqli_query($this->cn, $operation) ;
 		if(!$result) {$this->throw_sql_exception($class);}	
 	}
 	
 	//function for obtain data from db in object form
-	private function get_data($operation)
+	public function get_data($operation)
 	{		
 		$data = array(); 
 		$result = mysqli_query($this->cn, $operation) or die(mysqli_error($this->cn));
