@@ -95,6 +95,21 @@ class db
 					break;
 			}
 			break;
+			//USUARIO
+			case "usuario":
+			switch($options['lvl2'])
+			{
+				case "normal":
+
+					$nombre_usuario=mysqli_real_escape_string($this->cn,$object->get('nombre_usuario'));
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$correo_electronico=mysqli_real_escape_string($this->cn,$object->get('correo_electronico'));
+					$contrasena=mysqli_real_escape_string($this->cn,$object->get('contrasena'));
+					#echo 'contraseña: '.$contrasena;
+					$this->do_operation("INSERT INTO usuario VALUES('$nombre_usuario','$nombre','$correo_electronico',sha2('$contrasena',256),'user');");
+					break;
+			}
+			break;
 
 			case 'paquete':
 				switch($options['lvl2']) {
@@ -143,7 +158,6 @@ class db
 			{
 				case "normal":
 					$nombre_viejo=mysqli_real_escape_string($this->cn,$object->auxiliars['nombre_viejo']);
-
 					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
 					$descripcion=mysqli_real_escape_string($this->cn,$object->get('descripcion'));
 					$this->do_operation("UPDATE repositorio SET  nombre = '$nombre' , descripcion = '$descripcion' WHERE nombre = '$nombre_viejo';");
@@ -243,6 +257,7 @@ class db
 					$contrasena =  mysqli_real_escape_string($this->cn, $data['contrasena']);
 					$info = $this->get_data("SELECT * FROM usuario WHERE nombre_usuario='$nombre_usuario' AND 
 																	contrasena = SHA2('$contrasena',256);");
+
 					break;
 
 				case "one": 

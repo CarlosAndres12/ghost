@@ -10,7 +10,7 @@
       </div>
       <button type="submit" class="valign btn tooltipped" data-tooltip="Buscar repositorio">
 				<i class="material-icons">search</i>
-			</button>
+	  </button>
 			<input name="option" type="hidden" value="buscar_repositorio">	
     </div>
   </form>
