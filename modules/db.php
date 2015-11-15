@@ -246,6 +246,22 @@ class db
 
 				break;
 
+			case "paquetexusuario":
+
+				switch ($options['lvl2']) {
+
+					case "normal": {
+						$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
+						$repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
+						$usuario = mysqli_real_escape_string($this->cn, $object->get('usuario'));
+						$this->do_operation("DELETE FROM paquetexusuario WHERE paquete = '$paquete' AND repositorio = '$repositorio' AND usuario = '$usuario';");
+						break;
+					}
+
+				}
+
+				break;
+
 
 			
 			default: break;			  

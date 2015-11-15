@@ -70,6 +70,6 @@ ALTER TABLE licencia ADD CONSTRAINT licencia_paquete_FK FOREIGN KEY ( paquete, r
 
 ALTER TABLE paquete ADD CONSTRAINT paquete_repositorio_FK FOREIGN KEY ( repositorio ) REFERENCES repositorio ( nombre ) ;
 
-ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_paquete_FK FOREIGN KEY ( paquete,repositorio ) REFERENCES paquete ( nombre, repositorio ) ;
+ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_paquete_FK FOREIGN KEY ( paquete,repositorio ) REFERENCES paquete ( nombre, repositorio ) ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_usuario_FK FOREIGN KEY ( usuario) REFERENCES usuario ( nombre_usuario ) ;
+ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_usuario_FK FOREIGN KEY ( usuario) REFERENCES usuario ( nombre_usuario )  ON UPDATE CASCADE ON DELETE CASCADE ;

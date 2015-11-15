@@ -67,6 +67,8 @@
                                 <a data-tooltip="Adoptar paquete" class="tooltipped" href="{$gvar.l_global}adoptar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">folder_shared</i></a>
                             {/if}
                             {if $paquete->es_mantenido($paquetesxusuario)}
+                                <a data-tooltip="Agregar mantenedor" class="tooltipped" href="{$gvar.l_global}agregar_mantenedor.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">group_add</i></a>
+                                <a data-tooltip="Abandonar paquete" class="tooltipped" href="{$gvar.l_global}abandonar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">exit_to_app</i></a>
                                 <a data-tooltip="Editar paquete" class="tooltipped" href="{$gvar.l_global}editar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">mode_edit</i></a>
                                 <a data-tooltip="Eliminar paquete" class="tooltipped" href="{$gvar.l_global}eliminar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">delete</i></a>
                             {/if}

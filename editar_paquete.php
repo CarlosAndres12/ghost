@@ -63,12 +63,19 @@ class c_editar_paquete extends ghost_admin_controller {
     public function run()
     {
         parent::run();
-        if(!$this->paquete_es_mantenido_por_usuario_actual($this->get->repositorio, $this->get->nombre)){
-            $index = $gvar['l_global'];
-            header("Location: $index buscar_paquete.php?error_msg=Usted no puede editar este paquete por que no es el mantenedor.");
-        }
+        
         if(isset($this->post->option)){
+            if(!$this->paquete_es_mantenido_por_usuario_actual($this->post->repositorio, $this->post->nombre_viejo)){
+                $index = $gvar['l_global'];
+                header("Location: $index buscar_paquete.php?error_msg=Usted no puede editar este paquete por que no es el mantenedor.");
+                return;
+            }
             $this->{$this->post->option}();
+        }else{
+            if(!$this->paquete_es_mantenido_por_usuario_actual($this->get->repositorio, $this->get->nombre)){
+                $index = $gvar['l_global'];
+                header("Location: $index buscar_paquete.php?error_msg=Usted no puede editar este paquete por que no es el mantenedor.");
+            }
         }
 
         $paquete = c_utils::get_paquete($this->get->nombre, $this->get->repositorio,$this->orm);
