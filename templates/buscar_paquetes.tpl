@@ -61,7 +61,7 @@
                         <td>{$paquete->get('repositorio')} </td>
 
                         <td>
-                            <a data-tooltip="Descargar paquete" class="tooltipped" href="{$gvar.l_global}descargar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">get_app</i></a>
+                            <a data-tooltip="Descargar paquete" target="_blank" class="tooltipped" href="{$gvar.l_global}descargar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">get_app</i></a>
 
                             {if $paquete->es_huerfano($paquetes_huerfanos)}
                                 <a data-tooltip="Adoptar paquete" class="tooltipped" href="{$gvar.l_global}adoptar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">folder_shared</i></a>

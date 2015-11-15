@@ -10,13 +10,13 @@ repositorio VARCHAR (20) NOT NULL ,
 ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_PK PRIMARY KEY ( paquete,repositorio, usuario) ;
 
 
-CREATE TABLE depedencia
+CREATE TABLE dependencia
 (
  paquete  VARCHAR (200 ) NOT NULL ,
  dependencia VARCHAR (200 ) NOT NULL ,
  repositorio     VARCHAR (20 ) NOT NULL
 ) ;
-ALTER TABLE depedencia ADD CONSTRAINT depedencia_PK PRIMARY KEY ( paquete, dependencia, repositorio ) ;
+ALTER TABLE dependencia ADD CONSTRAINT dependencia_PK PRIMARY KEY ( paquete, dependencia, repositorio ) ;
 
 
 CREATE TABLE licencia
@@ -62,9 +62,9 @@ CREATE TABLE usuario
 ALTER TABLE usuario ADD CONSTRAINT usuario_PK PRIMARY KEY ( nombre_usuario ) ;
 
 
-ALTER TABLE depedencia ADD CONSTRAINT depedencia_paquete_FK FOREIGN KEY ( paquete, repositorio ) REFERENCES paquete ( nombre, repositorio ) ;
+ALTER TABLE dependencia ADD CONSTRAINT dependencia_paquete_FK FOREIGN KEY ( paquete, repositorio ) REFERENCES paquete ( nombre, repositorio ) ;
 
-ALTER TABLE depedencia ADD CONSTRAINT depedencia_paquete_FKv1 FOREIGN KEY ( dependencia, repositorio ) REFERENCES paquete ( nombre, repositorio ) ;
+ALTER TABLE dependencia ADD CONSTRAINT dependencia_paquete_FKv1 FOREIGN KEY ( dependencia, repositorio ) REFERENCES paquete ( nombre, repositorio ) ;
 
 ALTER TABLE licencia ADD CONSTRAINT licencia_paquete_FK FOREIGN KEY ( paquete, repositorio ) REFERENCES paquete ( nombre, repositorio ) ;
 

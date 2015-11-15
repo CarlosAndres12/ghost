@@ -339,6 +339,12 @@ class db
 					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
 					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre = '$nombre_paquete' AND (SELECT COUNT(*) FROM paquetexusuario WHERE paquetexusuario.repositorio = paquete.repositorio AND paquetexusuario.paquete = paquete.nombre ) = 0;");
 					break;	
+
+				case 'one':
+					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
+					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
+					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre = '$nombre_paquete';");
+					break;	
 			}
 			break;
 
@@ -356,6 +362,18 @@ class db
 					$paquete =  mysqli_real_escape_string($this->cn, $data['paquete']);
 					$repositorio =  mysqli_real_escape_string($this->cn, $data['repositorio']);
 					$info = $this->get_data("SELECT * FROM paquetexusuario WHERE usuario = '$usuario' AND paquete = '$paquete' AND repositorio = '$repositorio';");
+					break;
+			}
+			break;
+
+			//DEPENDENCIA																																																																																																						
+			case "dependencia":
+			switch($option['lvl2'])
+			{	
+				case "por_paquete": 
+					$paquete =  mysqli_real_escape_string($this->cn, $data['paquete']);
+					$repositorio =  mysqli_real_escape_string($this->cn, $data['repositorio']);
+					$info = $this->get_data("SELECT * FROM dependencia WHERE paquete = '$paquete' AND  repositorio = '$repositorio';");
 					break;
 			}
 			break;
