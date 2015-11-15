@@ -15,6 +15,23 @@ class paquete extends object_standard
 
 	private static $architectures = ["x86_32","x86_64","ARM6"];
 
+	public function es_mantenido($paquetesxusuario){
+		foreach ($paquetesxusuario as $key => $paquetexusuario) {
+			if($paquetexusuario->get('paquete') == $this->get('nombre') && $paquetexusuario->get('repositorio') == $this->get('repositorio') ){
+				return true;
+			}
+		}
+		return false;
+	}
+	public function es_huerfano($paquetes_huerfanos){
+		foreach ($paquetes_huerfanos as $key => $paquete_huerfano) {
+			if($paquete_huerfano->get('nombre') == $this->get('nombre') && $paquete_huerfano->get('repositorio') == $this->get('repositorio') ){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	//components
 	var $components = array();
 	

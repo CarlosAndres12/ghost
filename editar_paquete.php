@@ -29,7 +29,7 @@ class c_editar_paquete extends ghost_admin_controller {
         $this->orm->close();
 //        rename("files/$nombre_viejo","files/$nombre");
         $index = $gvar['l_global'];
-        header("Location: $index buscar_paquetes.php?success_msg=paquete actualizado exitosamente.");
+        header("Location: $index buscar_paquete.php?success_msg=paquete actualizado exitosamente.");
 
 
     }

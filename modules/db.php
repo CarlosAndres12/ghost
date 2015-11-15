@@ -131,6 +131,19 @@ class db
 						break;
 				}
 			break;
+
+			//PAQUETEXUSUARIO																																																																																											
+			case "paquetexusuario":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
+					$repositorio=mysqli_real_escape_string($this->cn,$object->get('repositorio'));
+					$usuario=mysqli_real_escape_string($this->cn,$object->get('usuario'));
+					$this->do_operation("INSERT INTO paquetexusuario VALUES('$paquete','$repositorio','$usuario');");
+					break;
+			}
+			break;
 			
 			default: break;
 		}
@@ -297,6 +310,31 @@ class db
 					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
 
 					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre LIKE '%$nombre_paquete%';");
+					break;
+
+				case 'buscar_huerfanos':
+					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
+					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
+					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre LIKE '%$nombre_paquete%' AND (SELECT COUNT(*) FROM paquetexusuario WHERE paquetexusuario.repositorio = paquete.repositorio AND paquetexusuario.paquete = paquete.nombre ) = 0;");
+					break;	
+
+				case 'buscar_huerfano':
+					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
+					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
+					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre = '$nombre_paquete' AND (SELECT COUNT(*) FROM paquetexusuario WHERE paquetexusuario.repositorio = paquete.repositorio AND paquetexusuario.paquete = paquete.nombre ) = 0;");
+					break;	
+			}
+			break;
+
+			//PAQUETEXUSUARIO																																																																																																						
+			case "paquetexusuario":
+			switch($option['lvl2'])
+			{
+				case "por_usuario": 
+					$usuario =  mysqli_real_escape_string($this->cn, $data['usuario']);
+					$info = $this->get_data("SELECT * FROM paquetexusuario WHERE usuario = '$usuario';");
+					break;
+
 			}
 			break;
 

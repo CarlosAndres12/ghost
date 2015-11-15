@@ -61,8 +61,16 @@
                         <td>{$paquete->get('repositorio')} </td>
 
                         <td>
-                            <a data-tooltip="Editar paquete" class="tooltipped" href="{$gvar.l_global}editar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">mode_edit</i></a>
-                            <a data-tooltip="Eliminar paquete" class="tooltipped" href="{$gvar.l_global}eliminar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">delete</i></a>
+                            <a data-tooltip="Descargar paquete" class="tooltipped" href="{$gvar.l_global}descargar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">get_app</i></a>
+
+                            {if $paquete->es_huerfano($paquetes_huerfanos)}
+                                <a data-tooltip="Adoptar paquete" class="tooltipped" href="{$gvar.l_global}adoptar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">folder_shared</i></a>
+                            {/if}
+                            {if $paquete->es_mantenido($paquetesxusuario)}
+                                <a data-tooltip="Editar paquete" class="tooltipped" href="{$gvar.l_global}editar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">mode_edit</i></a>
+                                <a data-tooltip="Eliminar paquete" class="tooltipped" href="{$gvar.l_global}eliminar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">delete</i></a>
+                            {/if}
+                            
                         </td>
                     </tr>
                 {/foreach}

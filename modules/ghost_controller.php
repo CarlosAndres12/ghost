@@ -10,6 +10,9 @@ class ghost_controller extends super_controller {
 		if(isset($this->get->success_msg)){			
 			$this->engine->assign('success_msg',$this->get->success_msg);
 		}
+		if(isset($this->get->error_msg)){			
+			$this->engine->assign('error_msg',$this->get->error_msg);
+		}
 	}
 }
 
