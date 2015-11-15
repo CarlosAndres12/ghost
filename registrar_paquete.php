@@ -22,6 +22,9 @@ class c_registrar_paquete extends ghost_controller
 
         $arch = $data->arquitectura;
 
+        var_dump($data);
+//        sleep(10);
+
         // pruebas de las arquitectura en el backEnd
         if(!in_array($arch,paquete::getArchitectures())) {
             $this->engine->assign('error_msg',"la arquitectura selecionado '$arch' no es valida, por favor seleccione otra.");
@@ -32,8 +35,8 @@ class c_registrar_paquete extends ghost_controller
 
         echo "el directorio es : ". $upload_dir;
 
-        echo "error : ".$_FILES['file']['error'];
-        sleep(10);
+//        echo "error : ".$_FILES['file']['error'];
+//        sleep(10);
 
         if(!move_uploaded_file($_FILES['file']['tmp_name'], $upload_dir)) {
 

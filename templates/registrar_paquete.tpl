@@ -2,7 +2,7 @@
     <div class="center-align">
         <h3>Registrar paquete</h3>
     </div>
-    <form url="{$gvar.l_global}registrar_paquete.php" method="post" class="col s12 m10 offset-m1 center-align" enctype="multipart/form-data">
+    <form id="form" url="{$gvar.l_global}registrar_paquete.php" method="post" class="col s12 m10 offset-m1 center-align" enctype="multipart/form-data">
         <input name="option" type="hidden" value="registrar_paquete">
         <div class="row">
             <div class="input-field col s12">
@@ -71,6 +71,28 @@
             </div>
         </div>
 
+        <div class="row">
+
+            <div class="input-field col s12">
+                {*<div class="chip">*}
+
+                    {*Jane Doe*}
+                {*</div>*}
+
+               <div>
+                   <input type="text" id="dependencia">
+               </div>
+
+                <div>
+                    <a class="btn-floating btn-large waves-effect waves-light green" onclick="add_dependecia()"><i class="material-icons">add</i></a>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
 
         <div class="row">
             <button type="submit" class="btn">
@@ -78,5 +100,34 @@
                 <i class="material-icons right">send</i>
             </button>
         </div>
+
+
+
+
     </form>
 </div>
+
+<script>
+
+
+
+    function add_dependecia() {
+//        var form = dom.getElementById("form");
+//
+//        var value = dom.getElementById("dependencia").valueOf();
+//
+//        var div = document.createElement('div');
+//        div.innerHTML('<input name="depencia[]" type="hidden" value="registrar_paquete">');
+//        form.appendChild(div);
+
+
+        // TODO mejorar interfaz
+
+        alert("hola");
+
+        $('<input>').attr('type','hidden').attr('name','depencia[]').attr('value',$('#dependencia').val()).appendTo('#form');
+
+    }
+
+
+</script>
