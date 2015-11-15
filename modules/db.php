@@ -335,6 +335,12 @@ class db
 					$info = $this->get_data("SELECT * FROM paquetexusuario WHERE usuario = '$usuario';");
 					break;
 
+				case "one": 
+					$usuario =  mysqli_real_escape_string($this->cn, $data['usuario']);
+					$paquete =  mysqli_real_escape_string($this->cn, $data['paquete']);
+					$repositorio =  mysqli_real_escape_string($this->cn, $data['repositorio']);
+					$info = $this->get_data("SELECT * FROM paquetexusuario WHERE usuario = '$usuario' AND paquete = '$paquete' AND repositorio = '$repositorio';");
+					break;
 			}
 			break;
 
