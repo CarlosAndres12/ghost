@@ -123,9 +123,9 @@
 
         // TODO mejorar interfaz
 
-        alert("hola");
+//        alert("hola");
 
-        $('<input>').attr('type','hidden').attr('name','depencia[]').attr('value',$('#dependencia').val()).appendTo('#form');
+        $('<input>').attr('type','hidden').attr('name','dependencia[]').attr('value',$('#dependencia').val()).appendTo('#form');
 
     }
 

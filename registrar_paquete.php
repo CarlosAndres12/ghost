@@ -22,7 +22,7 @@ class c_registrar_paquete extends ghost_controller
 
         $arch = $data->arquitectura;
 
-        var_dump($data);
+//        var_dump($data);
 //        sleep(10);
 
         // pruebas de las arquitectura en el backEnd
@@ -33,7 +33,7 @@ class c_registrar_paquete extends ghost_controller
 
         $upload_dir = ghost_config::get_package_path($data->repositorio,$data->nombre);
 
-        echo "el directorio es : ". $upload_dir;
+//        echo "el directorio es : ". $upload_dir;
 
 //        echo "error : ".$_FILES['file']['error'];
 //        sleep(10);
@@ -57,6 +57,24 @@ class c_registrar_paquete extends ghost_controller
         $paquete = new paquete($data);
 
         paquete::insert_object($paquete);
+
+        $dependencias = $data->dependencia;
+
+
+        foreach($dependencias as $dependencia) {
+            $temp = new stdClass();
+
+            $temp->paquete = $data->nombre;
+            $temp->repositorio = $data->repositorio;
+            $temp->dependencia = $dependencia;
+
+            $dep = new dependencia($temp);
+
+            dependencia::insert_object($dep);
+
+        }
+
+
 
         // TODO capturar exepciones
         $index = $gvar['l_global'];
