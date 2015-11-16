@@ -30,6 +30,8 @@ class c_agregar_mantenedor extends ghost_admin_controller {
             $this->orm->connect();
             $this->orm->insert_data('normal',$paquetexusuario);
             $this->orm->close();
+            $index = $gvar['l_global'];
+            header("Location: $index buscar_paquete.php?success_msg=El mantenedor ha sido agregado.");
         } catch (Exception $e) {
             $this->engine->assign('repositorio',$paquetexusuario->get('repositorio'));
             $this->engine->assign('nombre',$paquetexusuario->get('paquete'));
@@ -43,8 +45,8 @@ class c_agregar_mantenedor extends ghost_admin_controller {
         }
         
 
-        $index = $gvar['l_global'];
-        //header("Location: $index buscar_paquete.php?success_msg=El mantenedor ha sido agregado.");
+        
+        
 
 
     }
