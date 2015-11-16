@@ -100,10 +100,23 @@ class c_registrar_paquete extends ghost_controller
 
     public function run()
     {
-        parent::run();
-        if(isset($this->post->option)){
-            $this->{$this->post->option}();
+        try {
+
+            parent::run();
+            if(isset($this->post->option)){
+                $this->{$this->post->option}();
+            }
+
+        } catch (Exception $e) {
+
+            $this->error =  1;
+
+            $index = $gvar['l_global'];
+            header("Location: $index index.php?success_msg=error al registrar el paquete");
+
+
         }
+
         $this->display();
     }
 

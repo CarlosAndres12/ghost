@@ -65,7 +65,7 @@ class db
     }
 	
 	//for avoid sql injections, this functions cleans the variables
-	private function escape_string(&$data)
+	public function escape_string(&$data)
 	{
 		if(is_object($data))
 		{

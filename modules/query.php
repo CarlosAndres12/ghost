@@ -58,6 +58,8 @@ class query
         $params = "(";
         $values = "(";
 
+        ghost_orm::get_instace()->scape_data($data);
+
 
         foreach($data as $key => $value) {
 

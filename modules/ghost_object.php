@@ -7,7 +7,8 @@
  */
 
 include_once('query.php');
-include_once("object_interpeter.php");
+include_once('ghost_orm.php');
+
 
 class ghost_object extends object_standard {
 
@@ -17,7 +18,7 @@ class ghost_object extends object_standard {
 
         $objs = array();
 
-        foreach(object_interpeter::get_data(query::all($class)) as $obj) {
+        foreach(ghost_orm::get_instace()->get(query::all($class)) as $obj) {
             $objs[] = new $class($obj);
         }
 
@@ -36,7 +37,7 @@ class ghost_object extends object_standard {
 
         $objs = array();
 
-        foreach(object_interpeter::get_data(query::by_condition($condtions,$class)) as $obj) {
+        foreach(ghost_orm::get_instace()->get(query::by_condition($condtions,$class)) as $obj) {
             $objs[] = new $class($obj);
         }
 
@@ -45,7 +46,7 @@ class ghost_object extends object_standard {
 
     public static function insert_object($object) {
 
-        object_interpeter::insert_data(query::insert_object($object));
+        ghost_orm::get_instace()->insert(query::insert_object($object));
 
     }
 
