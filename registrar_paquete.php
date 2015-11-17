@@ -74,6 +74,19 @@ class c_registrar_paquete extends ghost_controller
 
         }
 
+        $licencias = $data->licencia;
+
+        foreach($licencias as $licencia) {
+            $temp = new stdClass();
+            $temp->paquete = $data->nombre;
+            $temp->repositorio = $data->repositorio;
+            $temp->valor = $licencia;
+
+            $lic = new licencia($temp);
+
+            licencia::insert_object($lic);
+        }
+
 
 
         // TODO capturar exepciones
@@ -89,7 +102,9 @@ class c_registrar_paquete extends ghost_controller
     {
         $this->engine->assign('title',$this->gvar['n_index']);
         $this->engine->assign('repositorios', repositorio::get_all());
+        $this->engine->assign('licencias', licencia::getLicencias());
         $this->engine->assign('archs',paquete::getArchitectures());
+
 
         $this->engine->display('header.tpl');
         $this->engine->display('registrar_paquete.tpl');

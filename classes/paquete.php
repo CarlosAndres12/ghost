@@ -17,6 +17,7 @@ class paquete extends ghost_object
 
 	private static $architectures = ["x86_32","x86_64","ARM6"];
 
+
 	//components
 	var $components = array();
 	

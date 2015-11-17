@@ -74,10 +74,7 @@
         <div class="row">
 
             <div class="input-field col s12">
-                {*<div class="chip">*}
 
-                    {*Jane Doe*}
-                {*</div>*}
 
                <div>
                    <input type="text" id="dependencia">
@@ -91,6 +88,34 @@
 
             </div>
         </div>
+
+
+        <div class="row">
+
+        <div class="input-field col s12">
+
+            <div>
+                {*<input type="text" id="licencia">*}
+
+                <select id = "licencia" class="browser-default">
+                    <option value="" disabled selected>selecione una licencia por favor</option>
+
+                    {foreach $licencias as $licencia}
+                        <option value={$licencia}>{$licencia}</option>
+                    {/foreach}
+
+                </select>
+
+            </div>
+
+            <div>
+                <a class="btn-floating btn-large waves-effect waves-light green" onclick="add_licencia()"><i class="material-icons">add</i></a>
+            </div>
+
+
+
+        </div>
+</div>
 
 
 
@@ -112,21 +137,14 @@
 
 
     function add_dependecia() {
-//        var form = dom.getElementById("form");
-//
-//        var value = dom.getElementById("dependencia").valueOf();
-//
-//        var div = document.createElement('div');
-//        div.innerHTML('<input name="depencia[]" type="hidden" value="registrar_paquete">');
-//        form.appendChild(div);
-
-
-        // TODO mejorar interfaz
-
-//        alert("hola");
 
         $('<input>').attr('type','hidden').attr('name','dependencia[]').attr('value',$('#dependencia').val()).appendTo('#form');
 
+
+    }
+
+    function add_licencia() {
+        $('<input>').attr('type','hidden').attr('name','licencia[]').attr('value',$('#licencia').val()).appendTo('#form');
     }
 
 
