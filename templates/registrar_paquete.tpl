@@ -76,8 +76,8 @@
             <div class="input-field col s12">
 
 
-               <div>
-                   <input type="text" id="dependencia">
+               <div id="deps">
+                   <input type="text" id="dependencias">
                </div>
 
                 <div>
@@ -94,7 +94,7 @@
 
         <div class="input-field col s12">
 
-            <div>
+            <div id="licencias">
                 {*<input type="text" id="licencia">*}
 
                 <select id = "licencia" class="browser-default">
@@ -105,6 +105,8 @@
                     {/foreach}
 
                 </select>
+
+
 
             </div>
 
@@ -138,13 +140,22 @@
 
     function add_dependecia() {
 
-        $('<input>').attr('type','hidden').attr('name','dependencia[]').attr('value',$('#dependencia').val()).appendTo('#form');
+        var dep  = $('#dependencias');
+
+        $('<input>').attr('type','hidden').attr('name','dependencia[]').attr('value',dep.val()).appendTo('#form');
+        $('<div>'+dep.val()+' <i class="material-icons">close</i>'+'</div>').attr('class','chip').attr('id',dep.val()).appendTo('#deps');
 
 
     }
 
     function add_licencia() {
-        $('<input>').attr('type','hidden').attr('name','licencia[]').attr('value',$('#licencia').val()).appendTo('#form');
+
+        var lic = $('#licencia');
+
+        $('<input>').attr('type','hidden').attr('name','licencia[]').attr('value',lic.val()).appendTo('#form');
+
+        $('<div>'+lic.val()+' <i class="material-icons">close</i>'+'</div>').attr('class','chip').attr('id',lic.val()).appendTo('#licencias');
+
     }
 
 
