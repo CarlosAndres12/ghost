@@ -3,10 +3,10 @@
 /**
  * Project:     Framework G - G Light
  * File:        db.php
- * 
+ *
  * For questions, help, comments, discussion, etc., please join to the
  * website www.frameworkg.com
- * 
+ *
  * @link http://www.frameworkg.com/
  * @copyright 2013-02-07
  * @author Group Framework G  <info at frameworkg dot com>
@@ -22,9 +22,9 @@ class db
 	var $limit = C_DB_LIMIT; //DB limit of elements by page
 	var $cn;
 	var $numpages;
-	
+
 	public function db(){}
-	
+
 	//connect to database
 	public function connect()
 	{
@@ -33,7 +33,7 @@ class db
 		if(!mysqli_select_db($this->cn,$this->db)) {die("Unable to communicate with the database $db: ".mysqli_error($this->cn));}
 		mysqli_query($this->cn,"SET NAMES utf8");
 	}
-	
+
 	//function for doing multiple queries
 	public function do_operation($operation, $class = NULL)
 	{
@@ -41,13 +41,13 @@ class db
 		echo $operation;
 
 		$result = mysqli_query($this->cn, $operation) ;
-		if(!$result) {$this->throw_sql_exception($class);}	
+		if(!$result) {$this->throw_sql_exception($class);}
 	}
-	
+
 	//function for obtain data from db in object form
 	public function get_data($operation)
-	{		
-		$data = array(); 
+	{
+		$data = array();
 		$result = mysqli_query($this->cn, $operation) or die(mysqli_error($this->cn));
 		while ($row = mysqli_fetch_object($result))
 		{
@@ -55,7 +55,7 @@ class db
 		}
 		return $data;
 	}
-	
+
 	//throw exception to web document
 	private function throw_sql_exception($class)
     {
@@ -63,7 +63,7 @@ class db
 		$msg = $error."<br /><br /><b>Error number:</b> ".$errno;
         throw new Exception($msg);
     }
-	
+
 	//for avoid sql injections, this functions cleans the variables
 	public function escape_string(&$data)
 	{
@@ -74,17 +74,17 @@ class db
 		}
 		else if(is_array($data))
 		{
-			foreach ($data as $key => $value) 
+			foreach ($data as $key => $value)
 			{if(!is_array($value)){$data[$key]=mysqli_real_escape_string($this->cn,$value);}}
 		}
 	}
-	
+
 	//function for add data to db
-	public function insert($options,$object) 
+	public function insert($options,$object)
 	{
 		switch($options['lvl1'])
-		{		
-			//REPOSITORIO																																																																																											
+		{
+			//REPOSITORIO
 			case "repositorio":
 			switch($options['lvl2'])
 			{
@@ -135,7 +135,7 @@ class db
 				}
 			break;
 
-			//PAQUETEXUSUARIO																																																																																											
+			//PAQUETEXUSUARIO
 			case "paquetexusuario":
 			switch($options['lvl2'])
 			{
@@ -147,16 +147,16 @@ class db
 					break;
 			}
 			break;
-			
+
 			default: break;
 		}
 	}
-	
+
 	//function for edit data from db
-	public function update($options,$object) 
+	public function update($options,$object)
 	{
 		switch($options['lvl1'])
-		{																																																																																																		
+		{
 			case "user":
 			switch($options['lvl2'])
 			{
@@ -205,20 +205,20 @@ class db
 
 				}
 			break;
-			
+
 			default: break;
 		}
 	}
-	
+
 	//function for delete data from db
 	public function delete($options,$object)
 	{
 		switch($options['lvl1'])
-		{																																																																																												
+		{
 			case "user":
 			switch($options['lvl2'])
 			{
-				case "normal": 
+				case "normal":
 					//
 					break;
 			}
@@ -227,7 +227,7 @@ class db
 			case "repositorio":
 			switch($options['lvl2'])
 			{
-				case "normal": 
+				case "normal":
 					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
 					$this->do_operation("DELETE FROM repositorio WHERE nombre = '$nombre';");
 					break;
@@ -262,6 +262,14 @@ class db
 						break;
 					}
 
+					case "normal": {
+						$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
+						$repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
+						$usuario = mysqli_real_escape_string($this->cn, $object->get('usuario'));
+						$this->do_operation("DELETE FROM paquetexusuario WHERE paquete = '$paquete' AND repositorio = '$repositorio' AND usuario = '$usuario';");
+						break;
+					}
+
 				} break;
 
 			case "dependencia" : {
@@ -280,80 +288,79 @@ class db
 					}
 
 				} break;
-
-
 			}
 
-			case "paquetexusuario":
+			case "licencia":
+				switch($options['lvl2']) {
 
-				switch ($options['lvl2']) {
+					case "by_paquete_repositorio": {
 
-					case "normal": {
-						$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
-						$repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
-						$usuario = mysqli_real_escape_string($this->cn, $object->get('usuario'));
-						$this->do_operation("DELETE FROM paquetexusuario WHERE paquete = '$paquete' AND repositorio = '$repositorio' AND usuario = '$usuario';");
+						$nombre_paquete = mysqli_real_escape_string($this->cn, $object->get('paquete'));
+						$nombre_repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
+
+						$this->do_operation("DELETE FROM licencia WHERE paquete = '$nombre_paquete' AND repositorio = '$nombre_repositorio';");
+
 						break;
 					}
 
-				}
 
-				break;
+				}break;
 
 
-			
-			default: break;			  
+
+
+			default: break;
 		}
 	}
-	
+
 	//function that returns an array with data from a operation
 	public function select($option,$data)
 	{
 		$info = array();
 		switch($option['lvl1'])
-		{				
-			//USUARIO																																																																																																						
+		{
+			//USUARIO
 			case "usuario":
 			switch($option['lvl2'])
 			{
-				case "login": 
+				case "login":
 					$nombre_usuario =  mysqli_real_escape_string($this->cn, $data['nombre_usuario']);
 					$contrasena =  mysqli_real_escape_string($this->cn, $data['contrasena']);
-					$info = $this->get_data("SELECT * FROM usuario WHERE nombre_usuario='$nombre_usuario' AND 
+					$info = $this->get_data("SELECT * FROM usuario WHERE nombre_usuario='$nombre_usuario' AND
 																	contrasena = SHA2('$contrasena',256);");
 
 					break;
 
-				case "one": 
+				case "one":
 					$nombre_usuario =  mysqli_real_escape_string($this->cn, $data['nombre_usuario']);
 					$info = $this->get_data("SELECT * FROM usuario WHERE nombre_usuario='$nombre_usuario';");
 					break;
 			}
 			break;
 
-			//REPOSITORIO																																																																																																						
+			//REPOSITORIO
 			case "repositorio":
 			switch($option['lvl2'])
 			{
-				case "one": 
+				case "one":
 					$nombre =  mysqli_real_escape_string($this->cn, $data['nombre']);
 					$info = $this->get_data("SELECT * FROM repositorio WHERE nombre = '$nombre';");
 					break;
 				case "all":
 					$info = $this->get_data("SELECT * FROM repositorio");
 					break;
-				case "search": 
+				case "search":
 					$nombre =  mysqli_real_escape_string($this->cn, $data['nombre']);
 					$info = $this->get_data("SELECT * FROM repositorio WHERE nombre LIKE '%$nombre%';");
 					break;
 			}
 			break;
 
-			//PAQUETE																																																																																																						
+			//PAQUETE
 			case "paquete":
 			switch($option['lvl2'])
 			{
-				case "by_repositorio": 
+				case "by_repositorio":
 					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
 					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio';");
 					break;
@@ -373,32 +380,32 @@ class db
 					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
 					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
 					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre LIKE '%$nombre_paquete%' AND (SELECT COUNT(*) FROM paquetexusuario WHERE paquetexusuario.repositorio = paquete.repositorio AND paquetexusuario.paquete = paquete.nombre ) = 0;");
-					break;	
+					break;
 
 				case 'buscar_huerfano':
 					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
 					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
 					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre = '$nombre_paquete' AND (SELECT COUNT(*) FROM paquetexusuario WHERE paquetexusuario.repositorio = paquete.repositorio AND paquetexusuario.paquete = paquete.nombre ) = 0;");
-					break;	
+					break;
 
 				case 'one':
 					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
 					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
 					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre = '$nombre_paquete';");
-					break;	
+					break;
 			}
 			break;
 
-			//PAQUETEXUSUARIO																																																																																																						
+			//PAQUETEXUSUARIO
 			case "paquetexusuario":
 			switch($option['lvl2'])
 			{
-				case "por_usuario": 
+				case "por_usuario":
 					$usuario =  mysqli_real_escape_string($this->cn, $data['usuario']);
 					$info = $this->get_data("SELECT * FROM paquetexusuario WHERE usuario = '$usuario';");
 					break;
 
-				case "one": 
+				case "one":
 					$usuario =  mysqli_real_escape_string($this->cn, $data['usuario']);
 					$paquete =  mysqli_real_escape_string($this->cn, $data['paquete']);
 					$repositorio =  mysqli_real_escape_string($this->cn, $data['repositorio']);
@@ -419,11 +426,11 @@ class db
 			}
 			break;
 
-			//DEPENDENCIA																																																																																																						
+			//DEPENDENCIA
 			case "dependencia":
 			switch($option['lvl2'])
-			{	
-				case "por_paquete": 
+			{
+				case "por_paquete":
 					$paquete =  mysqli_real_escape_string($this->cn, $data['paquete']);
 					$repositorio =  mysqli_real_escape_string($this->cn, $data['repositorio']);
 					$info = $this->get_data("SELECT * FROM dependencia WHERE paquete = '$paquete' AND  repositorio = '$repositorio';");
@@ -441,13 +448,13 @@ class db
 
 		return $info;
 	}
-	
+
 	//close the db connection
 	public function close()
 	{
 		if($this->cn){mysqli_close($this->cn);}
 	}
-	
+
 }
 
 ?>

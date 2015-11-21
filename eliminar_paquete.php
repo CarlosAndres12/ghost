@@ -61,9 +61,11 @@ class c_eliminar_paquete extends ghost_admin_controller {
             $obj->paquete = $nombre;
             $obj->repositorio = $this->get->repositorio;
 
-            $dep = new dependencia($obj);
+            $dep = new dependencia((array)$obj);
+            $lic = new licencia((array)$obj);
 
             $this->orm->delete_data('by_paquete_repositorio', $dep);
+            $this->orm->delete_data('by_paquete_repositorio', $lic);
         }
 
 

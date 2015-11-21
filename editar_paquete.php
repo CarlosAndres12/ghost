@@ -47,11 +47,17 @@ class c_editar_paquete extends ghost_admin_controller {
             return;
         }
         {
-            $obj = new stdClass();
-            $obj->paquete = $this->post->nombre_viejo;
-            $obj->repositorio = $this->get->repositorio;
-            $dep = new dependencia($obj);
-            $this->orm->delete_data('by_paquete_repositorio', $dep);
+
+                $obj = new stdClass();
+                $obj->paquete = $this->post->nombre_viejo;
+                $obj->repositorio = $this->get->repositorio;
+                $dep = new dependencia((array)$obj);
+                $lic = new licencia((array)$obj);
+                $this->orm->delete_data('by_paquete_repositorio', $dep);
+                $this->orm->delete_data('by_paquete_repositorio', $lic);
+
+
+
         }
         $this->orm->close();
 //        var_dump($data);
