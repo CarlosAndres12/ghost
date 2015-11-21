@@ -80,6 +80,8 @@ class c_registrar_paquete extends ghost_controller
 
         $dependencias = $data->dependencia;
 
+        $unique_deps = array();
+
 
         foreach($dependencias as $dependencia) {
             $temp = new stdClass();
@@ -90,11 +92,30 @@ class c_registrar_paquete extends ghost_controller
 
             $dep = new dependencia($temp);
 
-            dependencia::insert_object($dep);
+            $not_in = true;
+
+            foreach($unique_deps as $elem)  {
+                if($elem->get('dependencia') == $dependencia) {
+                    $not_in = false;
+                    break;
+                }
+
+            }
+
+            if($not_in)
+                $unique_deps[] = $dep;
 
         }
 
+
+        foreach($unique_deps as $dependencia) {
+
+            dependencia::insert_object($dependencia);
+        }
+
         $licencias = $data->licencia;
+
+        $unique_lics = array();
 
         foreach($licencias as $licencia) {
             $temp = new stdClass();
@@ -104,7 +125,24 @@ class c_registrar_paquete extends ghost_controller
 
             $lic = new licencia($temp);
 
-            licencia::insert_object($lic);
+            $not_in = true;
+
+            foreach($unique_lics as $elem)  {
+                if($elem->get('paquete') == $licencia) {
+                    $not_in = false;
+                    break;
+                }
+
+            }
+
+            if($not_in)
+                $unique_lics[] = $lic;
+
+
+        }
+
+        foreach($unique_lics as $licencia) {
+            licencia::insert_object($licencia);
         }
 
 
