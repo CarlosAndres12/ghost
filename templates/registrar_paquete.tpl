@@ -138,13 +138,13 @@
 
 
 
+
     function add_dependecia() {
 
         var dep  = $('#dependencias');
 
-        $('<input>').attr('type','hidden').attr('name','dependencia[]').attr('value',dep.val()).appendTo('#form');
-        $('<div>'+dep.val()+' <i class="material-icons">close</i>'+'</div>').attr('class','chip').attr('id',dep.val()).appendTo('#deps');
-
+        $('<input>').attr('type','hidden').attr('name','dependencia[]').attr('value',dep.val()).attr('class',dep.val()).appendTo('#form');
+        $('<div>'+dep.val()+' <i onclick="var pars = document.getElementsByClassName(this.id); while(pars[0]) pars[0].parentNode.removeChild(pars[0]);" class="material-icons" id="'+ dep.val() +'">close</i>'+'</div>').attr('class','chip ' + dep.val()).appendTo('#deps');
 
     }
 
@@ -152,11 +152,14 @@
 
         var lic = $('#licencia');
 
-        $('<input>').attr('type','hidden').attr('name','licencia[]').attr('value',lic.val()).appendTo('#form');
+        $('<input>').attr('type','hidden').attr('name','licencia[]').attr('value',lic.val()).attr("class",lic.val()).appendTo('#form');
 
-        $('<div>'+lic.val()+' <i class="material-icons">close</i>'+'</div>').attr('class','chip').attr('id',lic.val()).appendTo('#licencias');
+        $('<div>'+lic.val()+' <i onclick="var pars = document.getElementsByClassName(this.id); while(pars[0]) pars[0].parentNode.removeChild(pars[0]);" class="material-icons ' + lic.val() + '" id="' + lic.val() + '">close</i>'+'</div>').attr('class','chip ' + lic.val()).appendTo('#licencias');
 
     }
+
+
+
 
 
 </script>
