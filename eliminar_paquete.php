@@ -10,6 +10,24 @@ require('configs/include.php');
 
 class c_eliminar_paquete extends ghost_admin_controller {
 
+    public function paquete_es_mantenido_por_usuario_actual($repositorio, $nombre){
+        $cod['paquetexusuario']['paquete'] = $nombre;
+        $cod['paquetexusuario']['repositorio'] = $repositorio;
+        $cod['paquetexusuario']['usuario'] = $_SESSION["nombre_usuario"];
+
+        $options["paquetexusuario"]["lvl2"] = "one";
+
+        $this->orm->connect();
+        $this->orm->read_data(array("paquetexusuario"),$options,$cod);
+        $paquetexusuario = $this->orm->get_objects("paquetexusuario");
+        $this->orm->close();
+        if($paquetexusuario == null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public function eliminar_paquete(){
 
 
@@ -68,6 +86,7 @@ class c_eliminar_paquete extends ghost_admin_controller {
 
     public function run()
     {
+
         try {
 
             parent::run();
@@ -81,7 +100,6 @@ class c_eliminar_paquete extends ghost_admin_controller {
 
             $index = $gvar['l_global'];
             header("Location: $index index.php?success_msg=error al eliminar el paquete");
-
 
         }
 

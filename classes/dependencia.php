@@ -44,10 +44,10 @@ class dependencia extends ghost_object
                 switch($rel_name) {
                     case "p_d":
                         return array("paquete");
-                    break;
+                        break;
                     case "d_p":
                         return array("dependencia");
-                    break;
+                        break;
                 }
                 break;
 

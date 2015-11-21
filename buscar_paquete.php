@@ -12,10 +12,25 @@ require_once('utils.php');
 class c_buscar_paquete extends ghost_controller {
 
 
+    public function obtener_paquetes_mantenidos(){
+        $cod['paquetexusuario']['usuario'] = $_SESSION["nombre_usuario"];
 
+        $options["paquetexusuario"]["lvl2"] = "por_usuario";
+
+        $this->orm->connect();
+        $this->orm->read_data(array("paquetexusuario"),$options,$cod);
+        $paquetesxusuario = $this->orm->get_objects("paquetexusuario");
+        $this->orm->close();
+
+        return $paquetesxusuario;
+    }
 
 
     public function buscar_paquete(){
+
+        $paquetesxusuario = $this->obtener_paquetes_mantenidos();
+        $this->engine->assign('paquetesxusuario',$paquetesxusuario);
+
         if($this->get->nombre == null){
             $this->engine->assign('error_msg',"Para buscar un repositorio primero debe ingresar su nombre.");
             return;
@@ -23,10 +38,6 @@ class c_buscar_paquete extends ghost_controller {
 
         $repositorio = $this->get->repositorio;
         $nombre = $this->get->nombre;
-
-
-
-//        $this->engine->assign('nombre',$nombre);
 
 
         $cod['paquete']['nombre'] = $nombre;

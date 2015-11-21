@@ -134,6 +134,19 @@ class db
 						break;
 				}
 			break;
+
+			//PAQUETEXUSUARIO																																																																																											
+			case "paquetexusuario":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
+					$repositorio=mysqli_real_escape_string($this->cn,$object->get('repositorio'));
+					$usuario=mysqli_real_escape_string($this->cn,$object->get('usuario'));
+					$this->do_operation("INSERT INTO paquetexusuario VALUES('$paquete','$repositorio','$usuario');");
+					break;
+			}
+			break;
 			
 			default: break;
 		}
@@ -271,6 +284,22 @@ class db
 
 			}
 
+			case "paquetexusuario":
+
+				switch ($options['lvl2']) {
+
+					case "normal": {
+						$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
+						$repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
+						$usuario = mysqli_real_escape_string($this->cn, $object->get('usuario'));
+						$this->do_operation("DELETE FROM paquetexusuario WHERE paquete = '$paquete' AND repositorio = '$repositorio' AND usuario = '$usuario';");
+						break;
+					}
+
+				}
+
+				break;
+
 
 			
 			default: break;			  
@@ -334,30 +363,73 @@ class db
 					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
 					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
 
+
 					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre LIKE '%$nombre_paquete%' ORDER BY nombre;");
+
+
 					break;
+
+				case 'buscar_huerfanos':
+					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
+					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
+					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre LIKE '%$nombre_paquete%' AND (SELECT COUNT(*) FROM paquetexusuario WHERE paquetexusuario.repositorio = paquete.repositorio AND paquetexusuario.paquete = paquete.nombre ) = 0;");
+					break;	
+
+				case 'buscar_huerfano':
+					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
+					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
+					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre = '$nombre_paquete' AND (SELECT COUNT(*) FROM paquetexusuario WHERE paquetexusuario.repositorio = paquete.repositorio AND paquetexusuario.paquete = paquete.nombre ) = 0;");
+					break;	
+
+				case 'one':
+					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
+					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
+					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre = '$nombre_paquete';");
+					break;	
 			}
 			break;
 
-
+			//PAQUETEXUSUARIO																																																																																																						
 			case "paquetexusuario":
-				switch($option['lvl2']) {
+			switch($option['lvl2'])
+			{
+				case "por_usuario": 
+					$usuario =  mysqli_real_escape_string($this->cn, $data['usuario']);
+					$info = $this->get_data("SELECT * FROM paquetexusuario WHERE usuario = '$usuario';");
+					break;
 
-					case "by_usuario_repositorio":
+				case "one": 
+					$usuario =  mysqli_real_escape_string($this->cn, $data['usuario']);
+					$paquete =  mysqli_real_escape_string($this->cn, $data['paquete']);
+					$repositorio =  mysqli_real_escape_string($this->cn, $data['repositorio']);
+					$info = $this->get_data("SELECT * FROM paquetexusuario WHERE usuario = '$usuario' AND paquete = '$paquete' AND repositorio = '$repositorio';");
+					break;
 
-						$nombre_repositorio = mysqli_real_escape_string($this->cn,$data['nombre_repositorio']);
-						$nombre_usuario = mysqli_real_escape_string($this->cn, $data['usuario']);
-						$nombre_paquete = mysqli_real_escape_string($this->cn, $data['paquete']);
+				case "by_usuario_repositorio":
 
-						$info = $this->get_data("SELECT * FROM paquetexusuario WHERE paquete LIKE '%$nombre_paquete%' AND usuario = '$nombre_usuario' AND repositorio = '$nombre_repositorio' ORDER BY paquete;");
+					$nombre_repositorio = mysqli_real_escape_string($this->cn,$data['nombre_repositorio']);
+					$nombre_usuario = mysqli_real_escape_string($this->cn, $data['usuario']);
+					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['paquete']);
 
-
-						break;
-
+					$info = $this->get_data("SELECT * FROM paquetexusuario WHERE paquete LIKE '%$nombre_paquete%' AND usuario = '$nombre_usuario' AND repositorio = '$nombre_repositorio' ORDER BY paquete;");
 
 
+					break;
 
-				}
+			}
+			break;
+
+			//DEPENDENCIA																																																																																																						
+			case "dependencia":
+			switch($option['lvl2'])
+			{	
+				case "por_paquete": 
+					$paquete =  mysqli_real_escape_string($this->cn, $data['paquete']);
+					$repositorio =  mysqli_real_escape_string($this->cn, $data['repositorio']);
+					$info = $this->get_data("SELECT * FROM dependencia WHERE paquete = '$paquete' AND  repositorio = '$repositorio';");
+
+					break;
+			}
 			break;
 
 			default: break;

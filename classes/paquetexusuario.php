@@ -1,13 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: carlos
- * Date: 11/20/15
- * Time: 9:20 PM
- */
-class paquetexusuario extends ghost_object
+class paquetexusuario extends object_standard
 {
+    //attributes
     protected $paquete;
     protected $repositorio;
     protected $usuario;
@@ -18,48 +13,37 @@ class paquetexusuario extends ghost_object
     //auxiliars for primary key and for files
     var $auxiliars = array();
 
-
-    public function metadata() {
-        return array(
-            "repositorio" => array( "foreign_name" => "r_pu", "foreign" => "repositorio", "foreign_attribute" => "nombre" ),
-            "paquete" => array( "foreign_name" => "p_pu", "foreign" => "paquete", "foreign_attribute" => "nombre" ),
-            "usuario" => array( "foreign_name" => "u_pu", "foreign" => "usuario", "foreign_attribute" => "nombre_usuario" ),
-
-        );
+    //data about the attributes
+    public function metadata()
+    {
+        return array("paquete" => array(), "repositorio" => array(), "usuario" => array(),
+            "repositorio" => array( "foreign_name" => "u_p", "foreign" => "paquete", "foreign_attribute" => "repositorio" ),
+            "paquete" => array( "foreign_name" => "u_p", "foreign" => "paquete", "foreign_attribute" => "paquete" ),
+            "usuario" => array( "foreign_name" => "u_u", "foreign" => "usuario", "foreign_attribute" => "usuario" ));
     }
 
-    public function primary_key() {
-        return array("repositorio", "paquete", "usuario" );
+    public function primary_key()
+    {
+        return array("paquete","repositorio","usuario");
     }
-
-
-
 
     public function relational_keys($class, $rel_name)
     {
         switch($class)
         {
-            case "repositorio":
-                switch ($rel_name) {
-                    case "r_pu":
-                        return array("repositorio");
-                        break;
-                }
-                break;
-
             case "paquete":
-                switch($rel_name) {
-                    case "p_pu":
-                        return array("paquete");
+                switch ($rel_name) {
+                    case "u_p":
+                        return array("paquete","repositorio");
                         break;
                 }
                 break;
 
             case "usuario":
-                switch($rel_name) {
-                    case "u_pu":
+                switch ($rel_name) {
+                    case "u_u":
                         return array("usuario");
-                    break;
+                        break;
                 }
                 break;
 
@@ -68,8 +52,6 @@ class paquetexusuario extends ghost_object
         }
     }
 
-
-
-
-
 }
+
+?>

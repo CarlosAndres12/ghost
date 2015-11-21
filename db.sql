@@ -8,7 +8,7 @@
 CREATE TABLE paquetexusuario
 (
  paquete             VARCHAR (200) NOT NULL ,
-repositorio VARCHAR (20) NOT NULL ,
+ repositorio VARCHAR (20) NOT NULL ,
  usuario    VARCHAR (150) NOT NULL
 ) ;
 ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_PK PRIMARY KEY ( paquete,repositorio, usuario) ;
@@ -80,8 +80,8 @@ ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_usuario_FK FOREIGN KE
 
 
 
--- Oracle SQL Developer Data Modeler Summary Report: 
--- 
+-- Oracle SQL Developer Data Modeler Summary Report:
+--
 -- CREATE TABLE                             5
 -- CREATE INDEX                             0
 -- ALTER TABLE                             10
@@ -109,15 +109,15 @@ ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_usuario_FK FOREIGN KE
 -- CREATE SYNONYM                           0
 -- CREATE TABLESPACE                        0
 -- CREATE USER                              0
--- 
+--
 -- DROP TABLESPACE                          0
 -- DROP DATABASE                            0
--- 
+--
 -- REDACTION POLICY                         0
--- 
+--
 -- ORDS DROP SCHEMA                         0
 -- ORDS ENABLE SCHEMA                       0
 -- ORDS ENABLE OBJECT                       0
--- 
+--
 -- ERRORS                                   0
 -- WARNINGS                                 0
