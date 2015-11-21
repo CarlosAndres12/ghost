@@ -33,10 +33,16 @@ class c_registrar_paquete extends ghost_controller
 
         $upload_dir = ghost_config::get_package_path($data->repositorio,$data->nombre);
 
-//        echo "el directorio es : ". $upload_dir;
 
-//        echo "error : ".$_FILES['file']['error'];
-//        sleep(10);
+        {
+            $finfo = new finfo(FILEINFO_MIME);
+
+            if(strpos($finfo->file($_FILES['file']['tmp_name']),"application/zip") === true) {
+
+                $this->engine->assign('error_msg',"el archivo no es valido $type");
+                return;
+            }
+        }
 
         if(!move_uploaded_file($_FILES['file']['tmp_name'], $upload_dir)) {
 
@@ -50,9 +56,23 @@ class c_registrar_paquete extends ghost_controller
         $data->fecha_subida = date('Y/m/d H:i:s');
         $data->fecha_ultima_actualizada = $data->fecha_subida;
 
-        // TODO calcular correctamente
         $data->tamano_comprimido = $_FILES["file"]["size"];
-        $data->tamano_instalado = 1;
+
+        {
+            $zip = zip_open($upload_dir);
+            $data->tamano_instalado = 0;
+
+            if($zip) {
+                while($zip_entry = zip_read($zip)) {
+                    $data->tamano_instalado += zip_entry_filesize($zip_entry);
+                }
+            }
+
+
+            zip_close($zip);
+        }
+
+
 
         $paquete = new paquete($data);
 
