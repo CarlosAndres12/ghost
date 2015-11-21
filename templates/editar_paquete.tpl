@@ -77,6 +77,60 @@
 
 
         <div class="row">
+
+            <div class="input-field col s12">
+
+
+                <div id="deps">
+                    <input type="text" id="dependencias">
+                </div>
+
+                <div>
+                    <a class="btn-floating btn-large waves-effect waves-light green" onclick="add_dependecia()"><i class="material-icons">add</i></a>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+
+            <div class="input-field col s12">
+
+                <div id="licencias">
+                    {*<input type="text" id="licencia">*}
+
+                    <select id = "licencia" class="browser-default">
+                        <option value="" disabled selected>selecione una licencia por favor</option>
+
+                        {foreach $licencias as $licencia}
+                            <option value={$licencia}>{$licencia}</option>
+                        {/foreach}
+
+                    </select>
+
+
+
+                </div>
+
+                <div>
+                    <a class="btn-floating btn-large waves-effect waves-light green" onclick="add_licencia()"><i class="material-icons">add</i></a>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="row">
             <button type="submit" class="btn">
                 actualizar
                 <i class="material-icons right">send</i>
@@ -84,3 +138,34 @@
         </div>
     </form>
 </div>
+
+
+<script>
+
+
+
+
+    function add_dependecia() {
+
+        var dep  = $('#dependencias');
+
+        $('<input>').attr('type','hidden').attr('name','dependencia[]').attr('value',dep.val()).attr('class',dep.val()).appendTo('#form');
+        $('<div>'+dep.val()+' <i onclick="var pars = document.getElementsByClassName(this.id); while(pars[0]) pars[0].parentNode.removeChild(pars[0]);" class="material-icons" id="'+ dep.val() +'">close</i>'+'</div>').attr('class','chip ' + dep.val()).appendTo('#deps');
+
+    }
+
+    function add_licencia() {
+
+        var lic = $('#licencia');
+
+        $('<input>').attr('type','hidden').attr('name','licencia[]').attr('value',lic.val()).attr("class",lic.val()).appendTo('#form');
+
+        $('<div>'+lic.val()+' <i onclick="var pars = document.getElementsByClassName(this.id); while(pars[0]) pars[0].parentNode.removeChild(pars[0]);" class="material-icons ' + lic.val() + '" id="' + lic.val() + '">close</i>'+'</div>').attr('class','chip ' + lic.val()).appendTo('#licencias');
+
+    }
+
+
+
+
+
+</script>

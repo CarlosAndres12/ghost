@@ -235,6 +235,41 @@ class db
 				}
 
 				break;
+			case "paquetexusuario" :
+				switch($options['lvl2']) {
+
+					case "by_paquete_repositorio_usuario": {
+
+						$nombre_paquete = mysqli_real_escape_string($this->cn, $object->get('paquete'));
+						$nombre_repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
+						$nombre_usuario = mysqli_real_escape_string($this->cn, $object->get('usuario'));
+
+						$this->do_operation("DELETE FROM paquetexusuario WHERE paquete = '$nombre_paquete' AND repositorio = '$nombre_repositorio' AND usuario = '$nombre_usuario';");
+
+						break;
+					}
+
+				} break;
+
+			case "dependencia" : {
+
+				switch($options['lvl2']) {
+
+					case "by_paquete_repositorio": {
+
+						$nombre_paquete = mysqli_real_escape_string($this->cn, $object->get('paquete'));
+						$nombre_repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
+
+						$this->do_operation("DELETE FROM dependencia WHERE paquete = '$nombre_paquete' AND repositorio = '$nombre_repositorio';");
+
+						break;
+
+					}
+
+				} break;
+
+
+			}
 
 
 			
@@ -299,13 +334,39 @@ class db
 					$nombre_repositorio =  mysqli_real_escape_string($this->cn, $data['nombre_repositorio']);
 					$nombre_paquete = mysqli_real_escape_string($this->cn, $data['nombre']);
 
-					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre LIKE '%$nombre_paquete%';");
+					$info = $this->get_data("SELECT * FROM paquete WHERE repositorio = '$nombre_repositorio' AND nombre LIKE '%$nombre_paquete%' ORDER BY nombre;");
+					break;
 			}
 			break;
 
 
+			case "paquetexusuario":
+				switch($option['lvl2']) {
+
+					case "by_usuario_repositorio":
+
+						$nombre_repositorio = mysqli_real_escape_string($this->cn,$data['nombre_repositorio']);
+						$nombre_usuario = mysqli_real_escape_string($this->cn, $data['usuario']);
+						$nombre_paquete = mysqli_real_escape_string($this->cn, $data['paquete']);
+
+						$info = $this->get_data("SELECT * FROM paquetexusuario WHERE paquete LIKE '%$nombre_paquete%' AND usuario = '$nombre_usuario' AND repositorio = '$nombre_repositorio' ORDER BY paquete;");
+
+
+						break;
+
+
+
+
+				}
+			break;
+
 			default: break;
 		}
+
+
+
+
+
 		return $info;
 	}
 	

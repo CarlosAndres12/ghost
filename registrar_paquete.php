@@ -109,7 +109,7 @@ class c_registrar_paquete extends ghost_controller
 
 
 
-        // TODO capturar exepciones
+
         $index = $gvar['l_global'];
         header("Location: $index index.php?success_msg=paquete registrado exitosamente.");
 

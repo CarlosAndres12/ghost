@@ -61,8 +61,29 @@
                         <td>{$paquete->get('repositorio')} </td>
 
                         <td>
-                            <a data-tooltip="Editar paquete" class="tooltipped" href="{$gvar.l_global}editar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">mode_edit</i></a>
-                            <a data-tooltip="Eliminar paquete" class="tooltipped" href="{$gvar.l_global}eliminar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">delete</i></a>
+
+                            {if $_SESSION["es_administrador"] }
+
+                                <a data-tooltip="Eliminar paquete" class="tooltipped" href="{$gvar.l_global}eliminar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">delete</i></a>
+
+                            {/if}
+
+
+                            {if isset($paquete->soy_matenedor)}
+
+                                {if $paquete->soy_matenedor}
+
+                                    <a data-tooltip="Editar paquete" class="tooltipped" href="{$gvar.l_global}editar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">mode_edit</i></a>
+
+                                {/if}
+
+                            {else}
+
+                                <a data-tooltip="Adoptar paquete" class="tooltipped" href="{$gvar.l_global}editar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">loyalty</i></a>
+
+                            {/if}
+
+
                         </td>
                     </tr>
                 {/foreach}

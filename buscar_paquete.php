@@ -31,20 +31,52 @@ class c_buscar_paquete extends ghost_controller {
 
         $cod['paquete']['nombre'] = $nombre;
         $cod['paquete']['nombre_repositorio'] = $repositorio;
+        $cod['paquetexusuario']['nombre_repositorio'] = $repositorio;
+        $cod['paquetexusuario']['paquete'] = $nombre;
+        $cod['paquetexusuario']['usuario'] = $_SESSION["nombre_usuario"];
 
         $options["paquete"]["lvl2"] = "search";
+        $options["paquetexusuario"]["lvl2"] = "by_usuario_repositorio";
+
+
 
 
         $this->orm->connect();
         $this->orm->read_data(array("paquete"),$options,$cod);
         $paquetes = $this->orm->get_objects("paquete");
+
+        $this->orm->read_data(array('paquetexusuario'), $options, $cod);
+        $paquetexusuario = $this->orm->get_objects("paquetexusuario");
+
         $this->orm->close();
+
+//        var_dump($paquetes);
+//        echo "\n\n hola    ".$_SESSION["nombre_usuario"]."\n\n";
+//        var_dump($paquetexusuario);
 
         if($paquetes==null){
             $this->engine->assign('error_msg',"No se encontraron paquetes.");
+
+
         }else{
+
             $this->engine->assign('paquetes',$paquetes);
-//            var_dump($paquetes);
+
+
+            foreach($paquetexusuario as $elem) {
+
+                foreach($paquetes as &$paquete) {
+                    if($elem->get('paquete') == $paquete->get('nombre')) {
+
+                        $paquete->soy_matenedor = false;
+
+                        if($_SESSION["nombre_usuario"] == $elem->get('usuario')) {
+                            $paquete->soy_matenedor = true;
+                        }
+                    }
+                }
+            }
+
         }
     }
 
