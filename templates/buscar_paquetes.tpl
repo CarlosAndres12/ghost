@@ -63,7 +63,7 @@
                         <td>
 
                             <a data-tooltip="Descargar paquete" target="_blank" class="tooltipped" href="{$gvar.l_global}descargar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">get_app</i></a>
-                            {if $_SESSION["es_administrador"] }
+                            {if es_administrador }
 
                                 <a data-tooltip="Eliminar paquete" class="tooltipped" href="{$gvar.l_global}eliminar_paquete.php?nombre={$paquete->get('nombre')}&repositorio={$paquete->get('repositorio')}"><i class="material-icons">delete</i></a>
 

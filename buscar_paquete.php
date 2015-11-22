@@ -96,6 +96,7 @@ class c_buscar_paquete extends ghost_controller {
 
         $this->engine->assign('title',$this->gvar['n_index']);
         $this->engine->assign('repositorios',c_utils::get_repositorios($this->orm));
+        $this->engine->assign('es_administrador',$_SESSION["es_administrador"]);
 
         $this->engine->display('header.tpl');
         $this->engine->display('buscar_paquetes.tpl');

@@ -38,7 +38,7 @@ class db
 	public function do_operation($operation, $class = NULL)
 	{
 
-		echo $operation;
+//		echo $operation;
 
 		$result = mysqli_query($this->cn, $operation) ;
 		if(!$result) {$this->throw_sql_exception($class);}
@@ -125,7 +125,7 @@ class db
 						$repositorio = mysqli_real_escape_string($this->cn	, $object->get('repositorio'));
 
 
-						$query = "INSERT INTO paquete VALUE ('$nombre', '$arch', $version, '$descripcion', $comprimido, $instalado, '$fecha_subida', '$fecha_actulizacion', '$repositorio');";
+						$query = "INSERT INTO paquete VALUES ('$nombre', '$arch', $version, '$descripcion', $comprimido, $instalado, '$fecha_subida', '$fecha_actulizacion', '$repositorio');";
 
 						//echo "consulta". $query ."\n\n";
 
@@ -153,7 +153,13 @@ class db
 						$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
 						$repositorio=mysqli_real_escape_string($this->cn,$object->get('repositorio'));
 						$valor =mysqli_real_escape_string($this->cn,$object->get('valor'));
-						$this->do_operation("INSERT INTO dependencia VALUES('$paquete','$valor','$repositorio');");
+
+						$file = "log";
+
+						file_put_contents($file,"INSERT INTO licencia VALUES('$paquete','$valor','$repositorio');",FILE_APPEND);
+
+
+						$this->do_operation("INSERT INTO licencia VALUES('$paquete','$valor','$repositorio');");
 						break;
 				}
 

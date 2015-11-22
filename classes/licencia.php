@@ -6,7 +6,7 @@
  * Date: 11/16/15
  * Time: 4:52 PM
  */
-class licencia extends ghost_object
+class licencia extends object_standard
 {
     protected $paquete;
     protected $repositorio;
@@ -14,7 +14,7 @@ class licencia extends ghost_object
 
 
 
-    private static $licencias = ["GPL V2", "GPL V3", "LGPL V2", "LGPL V3", "MIT" ,"APACHE", "BSD", "AGPL V2", "AGPL V3"];
+    private static $licencias = ["GPLV2", "GPLV3", "LGPLV2", "LGPLV3", "MIT" ,"APACHE", "BSD", "AGPLV2", "AGPLV3"];
 
     //components
     var $components = array();

@@ -8,6 +8,7 @@
 
 require('configs/include.php');
 require_once('utils.php');
+require_once('ghost_config.php');
 
 class c_editar_paquete extends ghost_admin_controller {
 
@@ -40,26 +41,14 @@ class c_editar_paquete extends ghost_admin_controller {
         // si no se hace esto el usuario podria hacer que el sistema
         // modifique paquetes de otro usuario
 
+        $this->orm->connect();
+
         $this->orm->read_data(array('paquetexusuario'), $options, $cod);
         $paquetexusuario = $this->orm->get_objects("paquetexusuario");
         if($paquetexusuario == null) {
             $this->engine->assign('error_msg',"Hay un error en la verificacion de roles.");
             return;
         }
-        {
-
-                $obj = new stdClass();
-                $obj->paquete = $this->post->nombre_viejo;
-                $obj->repositorio = $this->post->repositorio_viejo;
-                $dep = new dependencia((array)$obj);
-                $lic = new licencia((array)$obj);
-                $this->orm->delete_data('by_paquete_repositorio', $dep);
-                $this->orm->delete_data('by_paquete_repositorio', $lic);
-
-
-
-        }
-
 
         // pruebas de las arquitectura en el backEnd
         if(!in_array($arch,paquete::getArchitectures())) {
@@ -73,13 +62,19 @@ class c_editar_paquete extends ghost_admin_controller {
                 return;
             }
         }
-        $upload_dir = ghost_config::get_package_path($data->repositorio,$this->post->nombre_viejo);
+
+
+        $upload_dir = ghost_config::get_package_path($this->post->repositorio_viejo,$this->post->nombre_viejo);
         unlink($upload_dir);
-        $upload_dir = ghost_config::get_package_path($data->repositorio,$data->nombre);
+        $upload_dir = ghost_config::get_package_path($this->post->repositorio,$this->post->nombre);
+        echo $upload_dir;
         if(!move_uploaded_file($_FILES['file']['tmp_name'], $upload_dir)) {
             $this->engine->assign('error_msg',"no fue posible subir el archivo");
+            var_dump($_FILES);
             return;
         }
+
+
 
         $data->fecha_ultima_actualizada = date('Y/m/d H:i:s');
         $data->tamano_comprimido = $_FILES["file"]["size"];
@@ -94,6 +89,27 @@ class c_editar_paquete extends ghost_admin_controller {
             zip_close($zip);
         }
         //paquete::insert_object($paquete);
+
+        {
+
+            $lic = new licencia();
+            $lic->set("paquete", $this->post->nombre_viejo);
+            $lic->set("repositorio", $this->post->repositorio_viejo);
+
+
+            $dep = new dependencia();
+            $dep->set("paquete", $this->post->nombre_viejo);
+            $dep->set("repositorio", $this->post->repositorio_viejo);
+
+
+
+            $this->orm->delete_data('by_paquete_repositorio', $dep);
+            $this->orm->delete_data('by_paquete_repositorio', $lic);
+
+        }
+
+
+
         {
             $paquete = new paquete($data);
             $paquete->auxiliars['nombre_viejo'] = $this->post->nombre_viejo;
@@ -102,13 +118,11 @@ class c_editar_paquete extends ghost_admin_controller {
             $this->orm->update_data('normal',$paquete);
 
 
-            $temp = new stdClass();
 
-            $temp->paquete = $data->nombre;
-            $temp->repositorio = $data->repositorio;
-            $temp->usuario = $_SESSION["nombre_usuario"];
-
-            $pxu = new paquetexusuario((array)$temp);
+            $pxu = new paquetexusuario();
+            $pxu->set('paquete',$this->post->nombre);
+            $pxu->set('repositorio',$this->post->repositorio);
+            $pxu->set('usuario',$_SESSION["nombre_usuario"]);
 
 
             $pxu->auxiliars['paquete_viejo'] = $this->post->nombre_viejo;
@@ -122,39 +136,53 @@ class c_editar_paquete extends ghost_admin_controller {
         $dependencias = $data->dependencia;
         $unique_deps = array();
         foreach($dependencias as $dependencia) {
-            $temp = new stdClass();
-            $temp->paquete = $data->nombre;
-            $temp->repositorio = $data->repositorio;
-            $temp->dependencia = $dependencia;
-            $dep = new dependencia($temp);
+
+            $dep = new dependencia();
+
+            $dep->set("paquete", $this->post->nombre);
+            $dep->set("repositorio", $this->post->repositorio);
+            $dep->set("dependencia", $dependencia);
+
+
             $not_in = true;
+
             foreach($unique_deps as $elem)  {
                 if($elem->get('dependencia') == $dependencia) {
                     $not_in = false;
                     break;
                 }
+
             }
+
             if($not_in)
                 $unique_deps[] = $dep;
+
         }
         foreach($unique_deps as $dependencia) {
+//            var_dump($dependencia);
             $this->orm->insert_data("normal",$dependencia);
         }
         $licencias = $data->licencia;
         $unique_lics = array();
         foreach($licencias as $licencia) {
-            $temp = new stdClass();
-            $temp->paquete = $data->nombre;
-            $temp->repositorio = $data->repositorio;
-            $temp->valor = $licencia;
-            $lic = new licencia($temp);
+            $lic = new licencia();
+            $lic->set("paquete", $this->post->nombre);
+            $lic->set("repositorio", $this->post->repositorio);
+            $lic->set("valor", $licencia);
+
+
+
+
             $not_in = true;
+
             foreach($unique_lics as $elem)  {
                 if($elem->get('paquete') == $licencia) {
                     $not_in = false;
                     break;
                 }
+
             }
+
             if($not_in)
                 $unique_lics[] = $lic;
         }
@@ -201,3 +229,5 @@ class c_editar_paquete extends ghost_admin_controller {
 }
 $call = new c_editar_paquete();
 $call->run();
+
+header ("Connection: close");

@@ -77,23 +77,35 @@ class c_registrar_paquete extends ghost_controller
 
 //        paquete::insert_object($paquete);
 
+//        $str = var_export( $data->dependencia, true);
+//        $index = $gvar['l_global'];
+//        header("Location: $index index.php?success_msg=$str");
+
+
 
         $this->orm->connect();
         $this->orm->insert_data("normal",$paquete);
+        $this->orm->close();
 
         $dependencias = $data->dependencia;
+
+        $file = "log";
+
+        file_put_contents($file, "ffff", FILE_APPEND);
+        file_put_contents($file,var_export($this->post,true), FILE_APPEND);
+
 
         $unique_deps = array();
 
 
         foreach($dependencias as $dependencia) {
-            $temp = new stdClass();
 
-            $temp->paquete = $data->nombre;
-            $temp->repositorio = $data->repositorio;
-            $temp->dependencia = $dependencia;
+            $dep = new dependencia();
 
-            $dep = new dependencia((array)$temp);
+            $dep->set("paquete", $this->post->nombre);
+            $dep->set("repositorio", $this->post->repositorio);
+            $dep->set("dependencia", $dependencia);
+
 
             $not_in = true;
 
@@ -111,22 +123,30 @@ class c_registrar_paquete extends ghost_controller
         }
 
 
+
+        //$this->engine->assign('error_msg',""hola " .var_export($unique_deps, true));
+
+
+        $this->orm->connect();
         foreach($unique_deps as $dependencia) {
 
             $this->orm->insert_data("normal",$dependencia);
-        }
+        } $this->orm->connect();
 
-        $licencias = $data->licencia;
+        $licencias = $this->post->licencia;
+
 
         $unique_lics = array();
 
         foreach($licencias as $licencia) {
-            $temp = new stdClass();
-            $temp->paquete = $data->nombre;
-            $temp->repositorio = $data->repositorio;
-            $temp->valor = $licencia;
 
-            $lic = new licencia((array)$temp);
+            $lic = new licencia();
+            $lic->set("paquete", $this->post->nombre);
+            $lic->set("repositorio", $this->post->repositorio);
+            $lic->set("valor", $licencia);
+
+
+
 
             $not_in = true;
 
@@ -144,8 +164,24 @@ class c_registrar_paquete extends ghost_controller
 
         }
 
+
+
+        $this->orm->connect();
         foreach($unique_lics as $licencia) {
+
+
             $this->orm->insert_data("normal",$licencia);
+        } $this->orm->close();
+
+
+        $this->orm->connect();
+        {
+            $pxu = new paquetexusuario();
+            $pxu->set('paquete',$this->post->nombre);
+            $pxu->set('repositorio',$this->post->repositorio);
+            $pxu->set('usuario',$_SESSION["nombre_usuario"]);
+
+            $this->orm->insert_data("normal", $pxu);
         }
 
         $this->orm->close();
@@ -158,13 +194,15 @@ class c_registrar_paquete extends ghost_controller
 
 
 
+
+
     }
 
 
     public function display()
     {
         $this->engine->assign('title',$this->gvar['n_index']);
-        $this->engine->assign('repositorios', repositorio::get_all());
+        $this->engine->assign('repositorios', c_utils::get_repositorios($this->orm));
         $this->engine->assign('licencias', licencia::getLicencias());
         $this->engine->assign('archs',paquete::getArchitectures());
 
@@ -189,8 +227,15 @@ class c_registrar_paquete extends ghost_controller
 
             $this->error =  1;
 
+//            $str = var_export($_SESSION["lics"], true);
+
             $index = $gvar['l_global'];
-            header("Location: $index index.php?success_msg=error al registrar el paquete");
+
+
+
+            header("Location: $index index.php?success_msg=error al registrar el paquete " . $e->getMessage());
+
+
 
 
         }

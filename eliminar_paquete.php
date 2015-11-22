@@ -52,20 +52,28 @@ class c_eliminar_paquete extends ghost_admin_controller {
         if($paquetexusuario == null) {
             $this->engine->assign('error_msg',"Hay un error en la verificacion de roles.");
             return;
-        } else {
-            $this->orm->delete_data('by_paquete_repositorio_usuario', $paquetexusuario);
         }
-
         {
-            $obj = new stdClass();
-            $obj->paquete = $nombre;
-            $obj->repositorio = $this->get->repositorio;
 
-            $dep = new dependencia((array)$obj);
-            $lic = new licencia((array)$obj);
+            $lic = new licencia();
+            $lic->set("paquete",  $nombre);
+            $lic->set("repositorio", $this->get->repositorio);
+
+            $dep = new dependencia();
+            $dep->set("paquete",  $nombre);
+            $dep->set("repositorio", $this->get->repositorio);
+
+            $pxu = new paquetexusuario();
+            $pxu->set('paquete',$nombre);
+            $pxu->set('repositorio',$this->get->repositorio);
+            $pxu->set('usuario',$_SESSION["nombre_usuario"]);
 
             $this->orm->delete_data('by_paquete_repositorio', $dep);
             $this->orm->delete_data('by_paquete_repositorio', $lic);
+            $this->orm->delete_data('by_paquete_repositorio_usuario', $pxu);
+
+
+
         }
 
 
@@ -101,7 +109,7 @@ class c_eliminar_paquete extends ghost_admin_controller {
             $this->error =  1;
 
             $index = $gvar['l_global'];
-            header("Location: $index index.php?success_msg=error al eliminar el paquete");
+            header("Location: $index index.php?success_msg=error al eliminar el paquete". $e->getMessage());
 
         }
 

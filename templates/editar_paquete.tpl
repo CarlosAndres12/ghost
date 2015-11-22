@@ -2,7 +2,7 @@
     <div class="center-align">
         <h3>Editar paquete</h3>
     </div>
-    <form url="{$gvar.l_global}editar_paquete.php" method="post" class="col s12 m10 offset-m1 center-align">
+    <form id="form" url="{$gvar.l_global}editar_paquete.php" method="post" class="col s12 m10 offset-m1 center-align" enctype="multipart/form-data">
         <input name="option" type="hidden" value="editar_paquete">
         <div class="row">
             <div class="input-field col s12">
