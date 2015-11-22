@@ -16,7 +16,7 @@ class paquetexusuario extends object_standard
     //data about the attributes
     public function metadata()
     {
-        return array("paquete" => array(), "repositorio" => array(), "usuario" => array(),
+        return array(
             "repositorio" => array( "foreign_name" => "u_p", "foreign" => "paquete", "foreign_attribute" => "repositorio" ),
             "paquete" => array( "foreign_name" => "u_p", "foreign" => "paquete", "foreign_attribute" => "paquete" ),
             "usuario" => array( "foreign_name" => "u_u", "foreign" => "usuario", "foreign_attribute" => "usuario" ));

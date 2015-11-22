@@ -1,6 +1,6 @@
 <?php
 
-class dependencia extends ghost_object
+class dependencia extends object_standard
 {
     //attributes
     protected $paquete;

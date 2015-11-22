@@ -13,7 +13,8 @@
 
 
         <input name="fecha_subida" type="hidden" value="{$paquete->get('fecha_subida')}">
-        <input name="nombre_viejo" type="hidden" value="{$paquete->get('nombre_viejo')}">
+        <input name="nombre_viejo" type="hidden" value="{$paquete->nombre_viejo}">
+        <input name="repositorio_viejo" type="hidden" value="{$paquete->repositorio_viejo}">
 
         <div class="row">
             <div class="input-field col s12">

@@ -30,7 +30,6 @@ require_once(C_FULL_PATH."modules/super_controller.php"); //Super Controller
 require_once(C_FULL_PATH."modules/ghost_controller.php"); //ghost Controller
 require_once(C_FULL_PATH."modules/ghost_admin_controller.php"); //ghost admin Controller
 require_once(C_FULL_PATH."modules/object_standard.php"); //Object Standard
-require_once(C_FULL_PATH."modules/ghost_object.php"); //Object Standard
 require_once(C_FULL_PATH."modules/orm.php"); //Object Relational Mapping
 require_once(C_FULL_PATH."modules/db.php"); //database manager
 require_once(C_FULL_PATH."configs/functions.php"); //functions of general use

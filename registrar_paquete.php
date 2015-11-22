@@ -10,7 +10,6 @@
 require('configs/include.php');
 require_once('utils.php');
 require_once('ghost_config.php');
-//include_once('active_record/ghost_object.php');
 
 class c_registrar_paquete extends ghost_controller
 {
@@ -39,7 +38,7 @@ class c_registrar_paquete extends ghost_controller
 
             if(strpos($finfo->file($_FILES['file']['tmp_name']),"application/zip") === true) {
 
-                $this->engine->assign('error_msg',"el archivo no es valido $type");
+                $this->engine->assign('error_msg',"el archivo no es valido");
                 return;
             }
         }
@@ -76,7 +75,11 @@ class c_registrar_paquete extends ghost_controller
 
         $paquete = new paquete($data);
 
-        paquete::insert_object($paquete);
+//        paquete::insert_object($paquete);
+
+
+        $this->orm->connect();
+        $this->orm->insert_data("normal",$paquete);
 
         $dependencias = $data->dependencia;
 
@@ -90,7 +93,7 @@ class c_registrar_paquete extends ghost_controller
             $temp->repositorio = $data->repositorio;
             $temp->dependencia = $dependencia;
 
-            $dep = new dependencia($temp);
+            $dep = new dependencia((array)$temp);
 
             $not_in = true;
 
@@ -110,7 +113,7 @@ class c_registrar_paquete extends ghost_controller
 
         foreach($unique_deps as $dependencia) {
 
-            dependencia::insert_object($dependencia);
+            $this->orm->insert_data("normal",$dependencia);
         }
 
         $licencias = $data->licencia;
@@ -123,7 +126,7 @@ class c_registrar_paquete extends ghost_controller
             $temp->repositorio = $data->repositorio;
             $temp->valor = $licencia;
 
-            $lic = new licencia($temp);
+            $lic = new licencia((array)$temp);
 
             $not_in = true;
 
@@ -142,8 +145,10 @@ class c_registrar_paquete extends ghost_controller
         }
 
         foreach($unique_lics as $licencia) {
-            licencia::insert_object($licencia);
+            $this->orm->insert_data("normal",$licencia);
         }
+
+        $this->orm->close();
 
 
 

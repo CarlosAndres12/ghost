@@ -2,7 +2,7 @@
 
 
  
-class paquete extends ghost_object
+class paquete extends object_standard
 {
 	//attributes
 	protected $nombre;

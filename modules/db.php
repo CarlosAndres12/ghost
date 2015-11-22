@@ -132,8 +132,33 @@ class db
 						$this->do_operation($query);
 
 						break;
+				} break;
+
+			case "dependencia":
+				switch($options['lvl2']) {
+					case "normal":
+						$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
+						$repositorio=mysqli_real_escape_string($this->cn,$object->get('repositorio'));
+						$dependencia =mysqli_real_escape_string($this->cn,$object->get('dependencia'));
+						$this->do_operation("INSERT INTO dependencia VALUES('$paquete','$dependencia','$repositorio');");
+						break;
 				}
+
 			break;
+
+
+			case "licencia":
+				switch($options['lvl2']) {
+					case "normal":
+						$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
+						$repositorio=mysqli_real_escape_string($this->cn,$object->get('repositorio'));
+						$valor =mysqli_real_escape_string($this->cn,$object->get('valor'));
+						$this->do_operation("INSERT INTO dependencia VALUES('$paquete','$valor','$repositorio');");
+						break;
+				}
+
+				break;
+
 
 			//PAQUETEXUSUARIO
 			case "paquetexusuario":
@@ -205,6 +230,31 @@ class db
 
 				}
 			break;
+
+
+			case "paquetexusuario":
+				switch($options['lvl2']) {
+
+					case "normal":
+
+						$nombre_paquete = mysqli_real_escape_string($this->cn, $object->get('paquete'));
+						$nombre_repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
+						$nombre_usuario = mysqli_real_escape_string($this->cn, $object->get('usuario'));
+
+						$nombre_paquete_viejo = mysqli_real_escape_string($this->cn, $object->auxiliars['paquete_viejo']);
+						$nombre_repositorio_viejo = mysqli_real_escape_string($this->cn, $object->auxiliars['repositorio_viejo']);
+						$nombre_usuario_viejo = mysqli_real_escape_string($this->cn, $object->auxiliars['usuario_viejo']);
+
+
+						$this->do_operation("UPDATE paquetexusuario SET paquete = '$nombre_paquete',repositorio = '$nombre_repositorio', usuario = '$nombre_usuario'
+											WHERE usuario = '$nombre_usuario_viejo' AND paquete = '$nombre_paquete_viejo' AND repositorio = '$nombre_repositorio_viejo;'");
+
+
+
+						break;
+
+
+				} break;
 
 			default: break;
 		}

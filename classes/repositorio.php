@@ -1,6 +1,6 @@
 <?php
  
-class repositorio extends ghost_object
+class repositorio extends object_standard
 {
 	//attributes
 	protected $nombre;
