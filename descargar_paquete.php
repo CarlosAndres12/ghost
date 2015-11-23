@@ -60,20 +60,19 @@ class c_descargar_paquete extends ghost_controller {
 
         $repositorio = $this->get->repositorio;
         foreach ($paquetes_a_descargar as $paquete) {
-            $cmd = "unzip /var/www/html/ghost/files/$repositorio/$paquete.zip  -d /var/www/html/ghost/".$path_descarga_paquete.' 2>&1';
+            $cmd = "unzip ".C_FULL_PATH."files/$repositorio/$paquete -d ".C_FULL_PATH.$path_descarga_paquete.' 2>&1';
             $retval = shell_exec($cmd);
             system('chmod -R 777 files');
+            echo $paquete.'<br>';
+        }
 
-            $cmd = "cd /var/www/html/ghost/".$path_descarga.' && zip -r paquete.zip paquete 2>&1';
+            $cmd = "cd ".C_FULL_PATH.$path_descarga.' && zip -r paquete.zip paquete 2>&1';
             shell_exec($cmd);
 
-            $cmd = "cd /var/www/html/ghost/".$path_descarga.' && rm -R paquete 2>&1';
+            $cmd = "cd ".C_FULL_PATH.$path_descarga.' && rm -R paquete 2>&1';
             shell_exec($cmd);
             $index = $gvar['l_global'];
             header("Location: $index ".$path_descarga."paquete.zip");
-        }
-
-
 
     }
 }
