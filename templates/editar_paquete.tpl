@@ -28,7 +28,7 @@
             <div class="input-field col s12">
 
                 <select name="arquitectura" id = "arquitectura" class="browser-default" required>
-                        <option value="" disabled selected>selecione una arquitectura por favor</option>
+                        <option value="{$paquete->get('arquitectura')}" disabled selected>selecione una arquitectura por favor</option>
 
                     {foreach $archs as $arch}
                         <option value={$arch}>{$arch}</option>
@@ -43,7 +43,7 @@
             <div class="input-field col s12">
 
                 <select name="repositorio" id = "repositorio" class="browser-default" required>
-                    <option value="" disabled selected>selecione un repositorio</option>
+                    <option value="{$paquete->get('repositorio')}" disabled selected>selecione un repositorio</option>
 
                     {foreach $repositorios as $rep}
                         <option value={$rep->get('nombre')}>{$rep->get('nombre')}</option>

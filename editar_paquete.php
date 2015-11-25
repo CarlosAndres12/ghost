@@ -214,7 +214,8 @@ class c_editar_paquete extends ghost_admin_controller {
         } catch (Exception $e) {
             $this->error =  1;
             $index = $gvar['l_global'];
-            header("Location: $index index.php?success_msg=error al actualizar el paquete");
+//            header("Location: $index index.php?success_msg=error al actualizar el paquete");
+            $this->engine->assign('error_msg',"error desconocido al editar paquete" . $e->getMessage());
         }
         $paquete = c_utils::get_paquete($this->get->nombre, $this->get->repositorio,$this->orm);
         $paquete->nombre_viejo = $this->get->nombre;
