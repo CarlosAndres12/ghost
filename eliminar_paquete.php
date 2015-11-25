@@ -48,10 +48,10 @@ class c_eliminar_paquete extends ghost_admin_controller {
         // si no se hace esto el usuario podria hacer que el sistema
         // elimine paquetes de otro usuario
         $this->orm->connect();
-        $this->orm->read_data(array('paquetexusuario'), $options, $cod);
-        $paquetexusuario = $this->orm->get_objects("paquetexusuario");
+//        $this->orm->read_data(array('paquetexusuario'), $options, $cod);
+//        $paquetexusuario = $this->orm->get_objects("paquetexusuario");
 
-        if($paquetexusuario == null) {
+        if(!$_SESSION["es_administrador"]) {
             $this->engine->assign('error_msg',"Hay un error en la verificacion de roles.");
             return;
         }
@@ -68,11 +68,11 @@ class c_eliminar_paquete extends ghost_admin_controller {
             $pxu = new paquetexusuario();
             $pxu->set('paquete',$nombre);
             $pxu->set('repositorio',$this->get->repositorio);
-            $pxu->set('usuario',$_SESSION["nombre_usuario"]);
+//            $pxu->set('usuario',$_SESSION["nombre_usuario"]);
 
             $this->orm->delete_data('by_paquete_repositorio', $dep);
             $this->orm->delete_data('by_paquete_repositorio', $lic);
-            $this->orm->delete_data('by_paquete_repositorio_usuario', $pxu);
+            $this->orm->delete_data('by_repositorio_nombre', $pxu);
 
 
 

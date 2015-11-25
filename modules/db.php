@@ -318,6 +318,15 @@ class db
 						break;
 					}
 
+					case "by_repositorio_nombre": {
+						$nombre_paquete = mysqli_real_escape_string($this->cn, $object->get('paquete'));
+						$nombre_repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
+
+						$this->do_operation("DELETE FROM paquetexusuario WHERE paquete = '$nombre_paquete' AND repositorio = '$nombre_repositorio';");
+
+						break;
+					}
+
 					case "normal": {
 						$paquete=mysqli_real_escape_string($this->cn,$object->get('paquete'));
 						$repositorio = mysqli_real_escape_string($this->cn, $object->get('repositorio'));
