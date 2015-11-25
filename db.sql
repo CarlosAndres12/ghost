@@ -83,7 +83,11 @@ ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_usuario_FK FOREIGN KE
 
 ALTER TABLE `paquetexusuario` DROP FOREIGN KEY `paquetexusuario_paquete_FK`; ALTER TABLE `paquetexusuario` ADD CONSTRAINT `paquetexusuario_paquete_FK` FOREIGN KEY (`paquete`, `repositorio`) REFERENCES `ghost`.`paquete`(`nombre`, `repositorio`) ON DELETE RESTRICT ON UPDATE CASCADE; ALTER TABLE `paquetexusuario` DROP FOREIGN KEY `paquetexusuario_usuario_FK`; ALTER TABLE `paquetexusuario` ADD CONSTRAINT `paquetexusuario_usuario_FK` FOREIGN KEY (`usuario`) REFERENCES `ghost`.`usuario`(`nombre_usuario`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
+ALTER TABLE `paquete` DROP FOREIGN KEY `paquete_repositorio_FK`; ALTER TABLE `paquete` ADD CONSTRAINT `paquete_repositorio_FK` FOREIGN KEY (`repositorio`) REFERENCES `ghost`.`repositorio`(`nombre`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
+ALTER TABLE `licencia` DROP FOREIGN KEY `licencia_paquete_FK`; ALTER TABLE `licencia` ADD CONSTRAINT `licencia_paquete_FK` FOREIGN KEY (`paquete`, `repositorio`) REFERENCES `ghost`.`paquete`(`nombre`, `repositorio`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `dependencia` DROP FOREIGN KEY `depedencia_paquete_FK`; ALTER TABLE `dependencia` ADD CONSTRAINT `depedencia_paquete_FK` FOREIGN KEY (`paquete`, `repositorio`) REFERENCES `ghost`.`paquete`(`nombre`, `repositorio`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `dependencia` DROP FOREIGN KEY `depedencia_paquete_FKv1`; ALTER TABLE `dependencia` ADD CONSTRAINT `depedencia_paquete_FKv1` FOREIGN KEY (`dependencia`, `repositorio`) REFERENCES `ghost`.`paquete`(`nombre`, `repositorio`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- Oracle SQL Developer Data Modeler Summary Report:
 --
