@@ -50,6 +50,17 @@ class c_editar_paquete extends ghost_admin_controller {
             return;
         }
 
+
+        foreach($this->post->licencia as $licencia) {
+
+            if (!in_array($licencia, licencia::getLicencias())) {
+                $this->engine->assign('error_msg', "la licencia selecionado '$licencia' no es valida, por favor seleccione otra.");
+                return;
+
+            }
+
+        }
+
         // pruebas de las arquitectura en el backEnd
         if(!in_array($arch,paquete::getArchitectures())) {
             $this->engine->assign('error_msg',"la arquitectura selecionado '$arch' no es valida, por favor seleccione otra.");

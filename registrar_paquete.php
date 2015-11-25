@@ -253,11 +253,10 @@ class c_registrar_paquete extends ghost_controller
 
 
             //header("Location: $index index.php?success_msg=error al registrar el paquete " . $e->getMessage());
-<<<<<<< HEAD
+
             $this->engine->assign('error_msg',"error desconocido al registrar paquete" . $e->getMessage());
-=======
-            $this->engine->assign('error_msg',"error descocido al registrar paquete" . $e->getMessage());
->>>>>>> origin/paquetes
+
+
 
 
 

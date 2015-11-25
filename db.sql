@@ -79,6 +79,11 @@ ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_paquete_FK FOREIGN KE
 ALTER TABLE paquetexusuario ADD CONSTRAINT paquetexusuario_usuario_FK FOREIGN KEY ( usuario) REFERENCES usuario ( nombre_usuario ) ;
 
 
+--- agregar esto para corregir bung
+
+ALTER TABLE `paquetexusuario` DROP FOREIGN KEY `paquetexusuario_paquete_FK`; ALTER TABLE `paquetexusuario` ADD CONSTRAINT `paquetexusuario_paquete_FK` FOREIGN KEY (`paquete`, `repositorio`) REFERENCES `ghost`.`paquete`(`nombre`, `repositorio`) ON DELETE RESTRICT ON UPDATE CASCADE; ALTER TABLE `paquetexusuario` DROP FOREIGN KEY `paquetexusuario_usuario_FK`; ALTER TABLE `paquetexusuario` ADD CONSTRAINT `paquetexusuario_usuario_FK` FOREIGN KEY (`usuario`) REFERENCES `ghost`.`usuario`(`nombre_usuario`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
 
 -- Oracle SQL Developer Data Modeler Summary Report:
 --
