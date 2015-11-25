@@ -25,6 +25,13 @@ class c_registrar_paquete extends ghost_controller
 //        sleep(10);
 
         // pruebas de las arquitectura en el backEnd
+
+        $this->engine->assign('nombre',$data->nombre);
+        $this->engine->assign('arquitectura',$data->arquitectura);
+        $this->engine->assign('repositorio',$data->repositorio);
+        $this->engine->assign('descripcion',$data->descripcion);
+
+
         if(!in_array($arch,paquete::getArchitectures())) {
             $this->engine->assign('error_msg',"la arquitectura selecionado '$arch' no es valida, por favor seleccione otra.");
             return;
@@ -81,11 +88,23 @@ class c_registrar_paquete extends ghost_controller
 //        $index = $gvar['l_global'];
 //        header("Location: $index index.php?success_msg=$str");
 
+        foreach($this->post->licencia as $licencia) {
+
+            if (!in_array($licencia, licencia::getLicencias())) {
+                $this->engine->assign('error_msg', "la licencia selecionado '$licencia' no es valida, por favor seleccione otra.");
+                return;
+
+            }
+
+        }
+
 
 
         $this->orm->connect();
         $this->orm->insert_data("normal",$paquete);
         $this->orm->close();
+
+
 
         $dependencias = $data->dependencia;
 
@@ -233,7 +252,8 @@ class c_registrar_paquete extends ghost_controller
 
 
 
-            header("Location: $index index.php?success_msg=error al registrar el paquete " . $e->getMessage());
+            //header("Location: $index index.php?success_msg=error al registrar el paquete " . $e->getMessage());
+            $this->engine->assign('error_msg',"error descocido al registrar paquete" . $e->getMessage());
 
 
 
