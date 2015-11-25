@@ -18,7 +18,7 @@
 
         <div class="row">
             <div class="input-field col s12">
-                <input id="version" name="version" type="text" required class="validate" value="{$paquete->get('version')}">
+                <input id="version" name="version" type="number" required class="validate" value="{$paquete->get('version')}">
                 <label for="version">version</label>
             </div>
         </div>
@@ -83,7 +83,7 @@
 
 
                 <div id="deps">
-                    <input type="text" id="dependencias">
+                    <input type="text" id="dependencias" placeholder="escriba el nombre de la dependencia del paquete y pulse el boton '+'">
                 </div>
 
                 <div>

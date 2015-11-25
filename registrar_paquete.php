@@ -29,6 +29,7 @@ class c_registrar_paquete extends ghost_controller
         $this->engine->assign('nombre',$data->nombre);
         $this->engine->assign('arquitectura',$data->arquitectura);
         $this->engine->assign('repositorio',$data->repositorio);
+        $this->engine->assign('version',$data->version);
         $this->engine->assign('descripcion',$data->descripcion);
 
 
@@ -43,7 +44,7 @@ class c_registrar_paquete extends ghost_controller
         {
             $finfo = new finfo(FILEINFO_MIME);
 
-            if(strpos($finfo->file($_FILES['file']['tmp_name']),"application/zip") === true) {
+            if(!(strpos("x".$finfo->file($_FILES['file']['tmp_name']),"application/zip") !== false)) {
 
                 $this->engine->assign('error_msg',"el archivo no es valido");
                 return;

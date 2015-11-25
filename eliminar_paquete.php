@@ -7,6 +7,8 @@
  */
 
 require('configs/include.php');
+require_once('utils.php');
+require_once('ghost_config.php');
 
 class c_eliminar_paquete extends ghost_admin_controller {
 
@@ -79,7 +81,9 @@ class c_eliminar_paquete extends ghost_admin_controller {
 
         $this->orm->delete_data('normal',$paquete);
         $this->orm->close();
-        unlink("files/$nombre");
+
+        $upload_dir = ghost_config::get_package_path($this->get->repositorio,$nombre);
+        unlink($upload_dir);
         $index = $gvar['l_global'];
         header("Location: $index buscar_paquete.php?success_msg=paquete eliminado exitosamente.");
     }

@@ -68,8 +68,9 @@ class c_editar_paquete extends ghost_admin_controller {
         }
         {
             $finfo = new finfo(FILEINFO_MIME);
-            if(strpos($finfo->file($_FILES['file']['tmp_name']),"application/zip") === true) {
-                $this->engine->assign('error_msg',"el archivo no es valido ");
+            if(!(strpos("x".$finfo->file($_FILES['file']['tmp_name']),"application/zip") !== false)) {
+
+                $this->engine->assign('error_msg',"el archivo no es valido");
                 return;
             }
         }
